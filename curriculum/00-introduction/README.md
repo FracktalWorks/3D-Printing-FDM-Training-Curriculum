@@ -45,7 +45,7 @@ Unlike **subtractive manufacturing** (CNC machining, which cuts away material) o
 - **Resolution**: 0.1–0.3 mm layer height typical
 - **Cost**: Low (printer $200–$2000, filament $20–$50/kg)
 - **Best for**: Functional prototypes, enclosures, mechanical parts
-- **Examples of printers**: Prusa MK4, Bambu Lab X1C, Creality Ender 3
+- **Examples of printers**: Fracktal Snowflake, Dragon 400, Twin Dragon 300
 
 > ✅ **FDM is the primary focus of this curriculum.** It is the most common technology in workshops, makerspaces, and entry-level manufacturing.
 

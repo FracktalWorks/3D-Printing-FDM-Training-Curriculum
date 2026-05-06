@@ -9,11 +9,10 @@
 
 | Resource | Why It's Useful |
 |---------|----------------|
-| [MKS Monster8 GitHub](https://github.com/makerbase-mks/MKS-Monster8) | Official pinout diagrams, wiring guides, firmware configs for Snowflake and Twin Dragon |
-| [MKS Robin Nano V3 GitHub](https://github.com/makerbase-mks/MKS-Robin-Nano-V3) | Official pinout diagrams for Julia's control board |
-| [MKS Eagle GitHub](https://github.com/makerbase-mks/MKS-Eagle) | Board documentation for Dragon |
+| [BIGTREETECH Manta M8P V2.0 GitHub](https://github.com/bigtreetech/Manta-M8P) | Official pinout diagrams, wiring guides for Fracktal machines |
+| [FracktalWorks Klipper IDEX Firmware](https://github.com/FracktalWorks/klipper_IDEX) | Official Klipper fork used in Dragon and Twin Dragon |
+| [TMC5160 Datasheet (Trinamic)](https://www.trinamic.com/fileadmin/assets/Products/ICs_Documents/TMC5160_Datasheet.pdf) | Manta M8P onboard driver data sheet |
 | [TMC2209 Datasheet (Trinamic)](https://www.trinamic.com/fileadmin/assets/Products/ICs_Documents/TMC2209_Datasheet.pdf) | Full TMC2209 register map, UART setup, stealthChop configuration |
-| [TMC2208 Datasheet (Trinamic)](https://www.trinamic.com/fileadmin/assets/Products/ICs_Documents/TMC2208_v3.0_Datasheet.pdf) | Julia's stepper driver — current limits, register configuration |
 | [NEMA 17 Stepper Reference (RepRap)](https://reprap.org/wiki/NEMA_Motor) | Electrical specs, coil wiring, current ratings |
 | [Cirkit Designer](https://app.cirkitdesigner.com/) | Browser-based schematic/wiring diagram tool used in Module 1 exercises |
 
@@ -32,8 +31,7 @@
 | [Klipper Pressure Advance](https://www.klipper3d.org/Pressure_Advance.html) | Pressure advance calibration procedure |
 | [Klipper IDEX Configuration](https://www.klipper3d.org/Config_Reference.html#dual_carriage) | Dual carriage (IDEX) configuration — Twin Dragon specific |
 | [Klipper Installation Guide](https://www.klipper3d.org/Installation.html) | How to install Klipper on a Raspberry Pi |
-| [Mainsail Documentation](https://docs.mainsail.xyz/) | Mainsail web UI setup and features |
-| [Fluidd Documentation](https://docs.fluidd.xyz/) | Fluidd web UI setup and features (Julia) |
+| [OctoPrint Documentation](https://docs.octoprint.org/) | OctoPrint web UI setup, plugins, and features |
 
 ---
 
@@ -52,8 +50,7 @@
 
 | Resource | Why It's Useful |
 |---------|----------------|
-| [BLTouch Official (Antclabs)](https://www.antclabs.com/bltouch) | Official wiring, pin specifications, modes |
-| [CR Touch Guide](https://www.creality.com/pages/creality-crtouch) | CR Touch calibration and setup (Julia) |
+| [BLTouch Official (Antclabs)](https://www.antclabs.com/bltouch) | Official BLTouch wiring, pin specifications, modes |
 | [HIWIN MGN12H Rail Datasheet](https://www.hiwin.com/products/linear-guideways/miniature-linear-guideways/) | MGN12H specs, load ratings, installation torques |
 | [Gates Carbon Drive Belt App](https://www.gatescarbondrive.com/) | Belt tension calculator by Gates (target 120–150 Hz) |
 | [GT2 Belt Guide (RepRap)](https://reprap.org/wiki/GT2_Belt) | GT2 timing belt profiles, pitch specs |
@@ -67,32 +64,20 @@
 
 | Resource | Why It's Useful |
 |---------|----------------|
-| [OrcaSlicer GitHub](https://github.com/SoftFever/OrcaSlicer) | Downloads, release notes, and machine profiles |
-| [OrcaSlicer Wiki](https://github.com/SoftFever/OrcaSlicer/wiki) | Official user guide and calibration flows |
-| [PrusaSlicer Help](https://help.prusa3d.com/category/prusaslicer_204) | Official PrusaSlicer documentation |
-| [Cura Marketplace (plugins)](https://marketplace.ultimaker.com/app/cura/plugins) | Plugin directory for Cura (if used) |
-| [Slic3r Manual](https://manual.slic3r.org/) | Original slicer documentation — foundational concepts |
+| [Fracktory Download](http://printers.fracktory.in/download) | Official Fracktory slicer for all Fracktal machines |
+| [Fracktal Works Support](https://care.fracktal.in) | Official support portal and knowledge base |
+| [Cura Marketplace (plugins)](https://marketplace.ultimaker.com/app/cura/plugins) | Plugin directory for Cura (Fracktory is Cura-based) |
 | [Ellis3D Tuning Guide](https://ellis3d.com/tuning/) | Community guide: pressure advance, first layer, retraction — very detailed |
 
 ---
 
-## OctoPrint
+## Fracktory Slicer
 
 | Resource | Why It's Useful |
 |---------|----------------|
-| [OctoPrint Official](https://octoprint.org/) | Download, setup, and official guides |
-| [OctoPrint Plugin Repository](https://plugins.octoprint.org/) | All available OctoPrint plugins with reviews |
-| [OctoPrint GitHub](https://github.com/OctoPrint/OctoPrint) | Source code, issue tracker, releases |
-| [Bed Visualizer Plugin](https://plugins.octoprint.org/plugins/bedlevelvisualizer/) | Visual bed mesh overlay — recommended plugin |
-
----
-
-## Fracktory
-
-| Resource | Why It's Useful |
-|---------|----------------|
-| [Fracktory Official](https://www.fracktory.com/) | Agent install, dashboards, print monitoring |
-| [Fracktory Documentation](https://docs.fracktory.com/) | Setup guide, printer integration, logging API |
+| [Fracktory Download](http://printers.fracktory.in/download) | Download page for Windows, macOS, Linux |
+| [Fracktal Works Website](https://www.fracktal.in) | Official Fracktal Works product information |
+| [Fracktal Support Portal](https://care.fracktal.in) | Setup guide, printer integration, support tickets |
 
 ---
 
@@ -100,7 +85,7 @@
 
 | Resource | Why It's Useful |
 |---------|----------------|
-| [Prusa Filament Storage Blog](https://blog.prusa3d.com/how-to-store-and-dry-filament_38465/) | Evidence-based drying temps/times and storage best practices |
+| [eSUN Filament Technical Data Sheets](https://www.esun3d.com/products.html) | Official eSUN TDS with print temps, drying, and material specs |
 | [All3DP Material Guide](https://all3dp.com/2/the-best-3d-printer-filament-types-guide/) | Overview of all FDM materials with pros/cons |
 | [Polymaker Material Guide](https://polymaker.com/resources/) | Datasheets for PLA, PETG, PA, PC — with moisture specs |
 | [Filaween Testing Database](http://www.filaween.com/) | Community-tested filament specs and brand comparisons |

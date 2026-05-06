@@ -10,32 +10,36 @@
 | Item | Value |
 |------|-------|
 | **Motion System** | CoreXY |
-| **Build Volume** | 300 × 300 × 300 mm |
-| **Control Board** | MKS Monster8 (STM32F407) |
-| **Firmware** | Klipper + Mainsail |
-| **Stepper Drivers** | TMC2209 (UART, stealthChop) |
-| **Extruder** | Direct Drive |
-| **Max Hotend Temp** | 300°C |
-| **Max Bed Temp** | 110°C |
-| **Bed Surface** | PEI spring-steel (magnetic) |
-| **Auto-leveling** | BLTouch |
-| **Host** | Raspberry Pi 4 (Mainsail) |
-| **Network** | `http://192.168.1.101` (or `http://snowflake`) |
+| **Build Volume** | 200 × 200 × 200 mm |
+| **Machine Dimensions** | 572 × 300 × 456 mm |
+| **Control Board** | BIGTREETECH Manta M8P V2.0 + RP2040 toolboard (CAN bus) |
+| **Firmware** | Marlin |
+| **Stepper Drivers** | TMC5160 (onboard Manta M8P) |
+| **Extruder** | Dual-Gear Drive (direct drive) |
+| **Max Hotend Temp** | 265°C |
+| **Max Bed Temp** | 100°C |
+| **Bed Surface** | PEI flexible build plate |
+| **Auto-leveling** | Load Cell Bed Levelling (no external probe) |
+| **Display** | 2.8-inch LCD Dial Display |
+| **Connectivity** | USB, LAN |
+| **Power** | 500 W |
+| **Net Weight** | 16 kg |
+| **Network** | `192.168.1.101` (LAN — for file transfer / SD card access) |
 
 ---
 
-## Klipper Console — Essential Commands
+## Marlin G-code Commands
 
 ```
 G28                          → Home all axes
-BED_MESH_CALIBRATE           → Run 5×5 auto bed leveling mesh
-PROBE_CALIBRATE              → Interactive Z-offset calibration
-PID_CALIBRATE HEATER=extruder TARGET=200   → PID tune hotend at 200°C
-PID_CALIBRATE HEATER=heater_bed TARGET=60  → PID tune bed at 60°C
-SAVE_CONFIG                  → Write calibration results to printer.cfg
-FIRMWARE_RESTART             → Reload printer.cfg without rebooting Pi
-QUERY_ENDSTOPS               → Check all endstop states
-SHAPER_CALIBRATE             → Re-tune resonance compensation (InputShaper)
+G29                          → Run auto bed leveling (Load Cell mesh)
+M48                          → Probe repeatability test (should be < 0.01 mm deviation)
+M303 E0 S210 C8              → PID auto-tune hotend at 210°C (8 cycles)
+M303 E-1 S60 C8              → PID auto-tune bed at 60°C (8 cycles)
+M851                         → Report/set Z probe offset
+M500                         → Save all settings to EEPROM
+M503                         → Print all current EEPROM settings
+M119                         → Report all endstop states
 M112                         → EMERGENCY STOP
 ```
 
@@ -69,15 +73,16 @@ M112                         → EMERGENCY STOP
 
 ---
 
-## BLTouch Probe Offsets
+## Load Cell Bed Levelling — Calibration
 
-```
-X offset: -38.0 mm    (probe is 38 mm LEFT of nozzle)
-Y offset:  +3.0 mm    (probe is 3 mm BEHIND nozzle)
-Z offset:  1.45 mm    (verify with PROBE_CALIBRATE — update as needed)
-```
+Snowflake uses **Load Cell Bed Levelling** (sensor built into the print head — no external probe hardware).
 
-> ⚠️ After any nozzle swap or BLTouch re-mount, re-run `PROBE_CALIBRATE` and `SAVE_CONFIG`.
+- **Run bed mesh:** Send `G29` — machine probes 25 points and builds a compensation mesh
+- **Check Z offset:** `M851` (report current Z offset) → adjust via LCD → Settings → Z Offset
+- **Test repeatability:** Send `M48` — deviation should be < 0.01 mm
+- **Save settings:** `M500` after any Z offset or calibration change
+
+> ⚠️ After any nozzle swap, re-run `G29` and verify Z offset. Save with `M500`.
 
 ---
 
@@ -85,13 +90,12 @@ Z offset:  1.45 mm    (verify with PROBE_CALIBRATE — update as needed)
 
 | Task | Command | Frequency |
 |------|---------|-----------|
-| Z-offset drift check | `PROBE_CALIBRATE` | Monthly or after nozzle swap |
-| PID tune — hotend | `PID_CALIBRATE HEATER=extruder TARGET=200` | If oscillation > ±3°C |
-| PID tune — bed | `PID_CALIBRATE HEATER=heater_bed TARGET=60` | If oscillation > ±2°C |
-| Bed mesh | `BED_MESH_CALIBRATE` | After bed surface change |
+| Z-offset drift check | `M851` → adjust via LCD → `M500` | Monthly or after nozzle swap |
+| PID tune — hotend | `M303 E0 S210 C8` then `M500` | If temp oscillation > ±3°C |
+| PID tune — bed | `M303 E-1 S60 C8` then `M500` | If temp oscillation > ±2°C |
+| Bed mesh | `G29` | After bed surface change |
 | Belt tension check | Gates app (120–150 Hz) | Monthly |
-| InputShaper re-tune | `SHAPER_CALIBRATE` | After any mechanical change |
-| E-steps / rotation_distance | Mark + extrude + measure | After extruder service |
+| E-steps calibration | Mark + extrude + measure → `M92 E<steps>` → `M500` | After extruder service |
 
 ---
 
@@ -99,30 +103,24 @@ Z offset:  1.45 mm    (verify with PROBE_CALIBRATE — update as needed)
 
 | # | Symptom | Root Cause | Fix |
 |---|---------|-----------|-----|
-| 1 | BLTouch fails to deploy | Probe pin stuck (filament debris in sleeve) | Clean sleeve with IPA; send `BLTOUCH_DEBUG COMMAND=reset` |
-| 2 | Layer shift after long infill run | InputShaper needs recalibration | Run `SHAPER_CALIBRATE` after any mechanical change |
-| 3 | Z-offset drifts between sessions | Thermal expansion of frame | Re-run `PROBE_CALIBRATE` at print temperature every session |
-| 4 | Extruder clicking at high speeds | Pressure advance misconfigured | Reduce `pressure_advance` to 0.04, re-calibrate |
-| 5 | Klipper "MCU timeout" error | USB connection issue | Replace USB cable (shielded data cable); restart Pi |
+| 1 | Load cell levelling fails / inconsistent | Debris on bed surface or nozzle tip | Clean nozzle and bed; re-run `G29` |
+| 2 | Layer shift after long infill run | Loose belt — check X/Y belt tension | Re-tension belts (Gates app 120–150 Hz target) |
+| 3 | Z-offset drifts between sessions | Thermal expansion of frame | Re-verify Z offset at print temperature; save with `M500` |
+| 4 | Extruder clicking at high speeds | Linear Advance misconfigured or excessive speed | Reduce print speed 10%; tune `M900 K<value>` (Linear Advance) |
+| 5 | Serial communication error (host software drops) | USB cable or baud rate mismatch | Use shielded USB cable; set baud to 250000 in host software |
 
 ---
 
-## SSH Access
+## USB / Serial Access
 
-```bash
-ssh pi@192.168.1.101
-# Or using SSH config alias:
-ssh snowflake
+Snowflake runs **Marlin firmware** — no SSH or Raspberry Pi required. Control the printer via:
 
-# Klipper config location:
-~/printer_data/config/printer.cfg
-
-# Restart Klipper:
-sudo systemctl restart klipper
-
-# View live Klipper log:
-tail -f ~/printer_data/logs/klippy.log
-```
+- **LCD Dial Display** (on-machine): Navigate menus to start prints, set temperatures, run `Auto Home`, `Auto Bed Leveling`, adjust Z offset
+- **USB serial** (host computer): Connect with a host program (Pronterface, Repetier-Host, or Cura)
+  - Baud rate: **250000**
+  - Select the correct COM port in the host software
+- **SD card**: Save `.gcode` from Fracktory → insert SD card → LCD → Print → select file
+- **LAN (file transfer)**: `192.168.1.101` — used for G-code file transfer only (not a web interface)
 
 ---
 
@@ -138,7 +136,7 @@ tail -f ~/printer_data/logs/klippy.log
 | Hotend Thermistor | T0 | JST-XH 2-pin |
 | Bed Heater | HB | XT60 |
 | Bed Thermistor | TB | JST-XH 2-pin |
-| BLTouch (5-wire) | SERVO + Z-PROBE | JST-XH 5-pin |
+| Load Cell (bed probe) | LOAD-CELL port | JST-XH 4-pin |
 | Part Cooling Fan | FAN0 | JST-XH 2-pin |
 | Hotend Fan | FAN1 | JST-XH 2-pin |
 | X Endstop | X-STOP | JST-XH 3-pin |

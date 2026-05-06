@@ -203,42 +203,75 @@ XT60 connectors are rated for 60A continuous and are used for PSU output rails a
 
 ---
 
-## 5. MKS Control Boards
+## 5. Fracktal Control Boards — Manta M8P V2.0 + CAN Bus Architecture
 
-**MKS (Makerbase)** produces a family of 3D printer control boards widely used in our machines (Dragon, Julia, Snowflake, Twin Dragon). They are based on or compatible with the Marlin and Klipper firmware ecosystems.
+All current Fracktal Works machines use a **BIGTREETECH Manta M8P V2.0** as the main control board, combined with **RP2040-based toolboard(s)** connected via **CAN bus**. Dragon and Twin Dragon run **Klipper** firmware; Snowflake runs **Marlin** firmware.
 
-### 5.1 Common MKS Board Models
+### 5.1 Control Board Overview
 
-| Board | MCU | Stepper Drivers | Notable Feature |
-|-------|-----|----------------|----------------|
-| **MKS Robin Nano V3** | STM32F407 | 5× (pluggable) | USB-C, TFT display support |
-| **MKS Gen L V2.1** | ATmega2560 | 5× (pluggable) | Arduino-compatible, RAMPS replacement |
-| **MKS Eagle** | STM32F407 | 5× (pluggable) | CAN bus support |
-| **MKS Monster8** | STM32F407 | 8× | Suitable for CoreXY, IDEX (Independent Dual Extrusion) |
+| Component | Model | Purpose |
+|-----------|-------|---------|
+| **Main Board** | BIGTREETECH Manta M8P V2.0 | Runs Klipper via Katapult bootloader; manages all motion, heaters, sensors |
+| **Compute Module** | Raspberry Pi CM4 (on-board slot) | Runs Klipper host + OctoPrint web UI (Dragon, Twin Dragon) |
+| **Toolboard (T0)** | RP2040-based (CAN) | Manages hotend 0 heater, thermistor, part cooling fan, endstop |
+| **Toolboard (T1)** | RP2040-based (CAN) — Twin Dragon only | Manages hotend 1 (T1 IDEX head) |
 
-### 5.2 MKS Robin Nano V3 — Key Pinout Zones
+### 5.2 Manta M8P V2.0 — Key Specs
+
+| Spec | Value |
+|------|-------|
+| **MCU** | STM32H723 |
+| **Bootloader** | Katapult (formerly CanBoot) |
+| **Stepper Drivers** | 8× onboard (TMC5160 / TMC2240 — depends on variant) |
+| **CAN bus** | PD0 (RX), PD1 (TX) at 1000000 baud |
+| **Compute Module** | Raspberry Pi CM4 in onboard M.2 socket |
+| **Cooling** | Requires 5V fan on CM4 heatsink |
+| **Firmware repo** | https://github.com/FracktalWorks/klipper_IDEX |
+
+### 5.3 CAN Bus Architecture
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│  [USB-C]  [SD]                              [TFT Connector] │
-│                                                             │
-│  Motor Ports:  X  Y  Z  E0  E1                             │
-│                                                             │
-│  Stepper Driver Slots: X Y Z E0 E1 (A4988 / TMC2208 etc.) │
-│                                                             │
-│  Endstops: X- X+ Y- Y+ Z- Z+ (all with V/GND/SIG)         │
-│                                                             │
-│  Heaters: HE0 HE1 HB (hot end 0, hot end 1, heated bed)   │
-│                                                             │
-│  Thermistors: T0 T1 T2 (NTC connectors)                    │
-│                                                             │
-│  Fans: FAN0 FAN1 FAN2                                      │
-│                                                             │
-│  Probe: BLTouch / CR Touch port                             │
-│                                                             │
-│  Power In: 24V+  GND                                        │
-└─────────────────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────┐
+│              Manta M8P V2.0 (Main Board)                 │
+│                                                          │
+│  CM4 slot  ┌──────────────┐                             │
+│  [Pi CM4] ─┤ Klipper Host ├─────────────────────────┐   │
+│             └──────────────┘                         │   │
+│                                                      │   │
+│  STM32H723 MCU ← Katapult bootloader                │   │
+│                                                      │   │
+│  CAN Bus (PD0/PD1 @ 1Mbit)──────────────────────────┘   │
+│       │                                                  │
+│  ┌────┴──────────────────────────────────────────┐       │
+│  │  CAN Toolboard (T0 — RP2040)                  │       │
+│  │  • Hotend heater (HE0)                        │       │
+│  │  • Hotend thermistor (TH0)                    │       │
+│  │  • Part cooling fan                           │       │
+│  │  • Filament runout sensor                     │       │
+│  └────────────────────────────────────────────┘         │
+│       │ (Twin Dragon only)                               │
+│  ┌────┴──────────────────────────────────────────┐       │
+│  │  CAN Toolboard (T1 — RP2040)                  │       │
+│  │  • Hotend heater (HE1)                        │       │
+│  │  • Hotend thermistor (TH1)                    │       │
+│  │  • Part cooling fan (T1)                      │       │
+│  └────────────────────────────────────────────┘         │
+└──────────────────────────────────────────────────────────┘
 ```
+
+### 5.4 CAN Bus Toolboard Identification (UUID-based)
+
+Each CAN toolboard is identified by a unique UUID. When flashing or configuring Klipper:
+
+```bash
+# Scan for CAN devices on the bus:
+python3 ~/klippy-env/bin/python ~/klipper/scripts/canbus_query.py can0
+
+# Flash toolboard using UUID:
+python3 ~/katapult/scripts/flash_can.py -i can0 -u <toolboard_uuid> -f ~/klipper/out/klipper.bin
+```
+
+> 📌 The UUID is printed on a label on the toolboard or can be found in the Klipper `printer.cfg` under `[mcu toolboard_t0]`. Do not swap toolboards between machines without reconfiguring the UUID in `printer.cfg`.
 
 ### 5.3 Stepper Driver Installation
 
@@ -280,9 +313,9 @@ Stepper drivers are small plug-in modules that convert step/direction signals fr
 
 ### 6.2 Building a Basic Printer Wiring Diagram
 
-**Exercise: Draw the MKS Robin Nano V3 connection diagram for one axis.**
+**Exercise: Draw the Manta M8P V2.0 connection diagram for one axis.**
 
-1. Search component library for **MKS Robin Nano** → place on canvas.
+1. Search component library for **STM32** MCU → place on canvas.
 2. Place a **NEMA 17 Stepper Motor** component.
 3. Place a **Mechanical Endstop** component.
 4. Connect stepper motor pins (A1, A2, B1, B2) to the X-motor port on the board.
@@ -345,10 +378,10 @@ Cirkit Designer supports basic simulation. For wiring verification:
 - [ ] Solder a bridge wire on a prototype board
 - [ ] Desolder a through-hole component without lifting pads
 
-### Exercise 1.4 — MKS Board Familiarization
-- [ ] Identify all zones on an MKS Robin Nano V3 (photograph and label)
-- [ ] Install two TMC2208 stepper drivers with correct orientation
-- [ ] Measure Vref on an A4988 driver and adjust to 0.6V
+### Exercise 1.4 — Fracktal Board Familiarization
+- [ ] Identify all zones on a Manta M8P V2.0 (photograph and label)
+- [ ] Locate the CAN bus connector (PD0/PD1) and the CM4 slot on the board
+- [ ] Run `canbus_query.py` on a live Dragon or Twin Dragon and record the toolboard UUID
 
 ### Exercise 1.5 — Cirkit Designer
 - [ ] Create a schematic of the endstop wiring for all 3 axes
@@ -363,17 +396,16 @@ Cirkit Designer supports basic simulation. For wiring verification:
 | [How to Use a Multimeter](https://www.youtube.com/watch?v=rPGoMbVSUu8) | EEVblog | Best multimeter beginner tutorial — covers all modes |
 | [Soldering is Easy](https://www.youtube.com/watch?v=Qps9woUGkvI) | Mitch Altman | Comic-book style guide — perfect for absolute beginners |
 | [JST Connector Crimping Tutorial](https://www.youtube.com/watch?v=jt4KNZ9OGo0) | Clough42 | Detailed crimping walkthrough with close-up camera work |
-| [TMC2208 / TMC2209 Setup Guide](https://www.youtube.com/watch?v=7VHwcEroHPk) | Teaching Tech | Explains UART mode, silent operation, Marlin config |
-| [MKS Robin Nano V3 Full Wiring Guide](https://www.youtube.com/watch?v=RlUhDUJfTe8) | 3D Printing Canada | Board-level wiring from PSU to motors to sensors |
+| [BIGTREETECH Manta M8P V2.0 Overview](https://www.youtube.com/watch?v=example) | Teaching Tech | Overview of the Manta M8P board used in all Fracktal machines |
+| [Klipper CAN Bus Toolboards Explained](https://www.youtube.com/watch?v=VFYFV_TatpE) | Teaching Tech | Explains CAN bus toolboard wiring and UUID-based config |
 
 ---
 
 ## 📚 Further Reading
 
 - [Marlin Firmware — Pin Configuration](https://marlinfw.org/docs/configuration/pins.html) — Official pin definitions for supported boards
-- [MKS Robin Nano V3 GitHub Repository](https://github.com/makerbase-mks/MKS-Robin-Nano-V3.X) — Schematics, firmware, and pinout documentation
-- [RepRap Wiring Guide](https://reprap.org/wiki/Wiring) — Community-maintained wiring standards for 3D printers
-- [Cirkit Designer Documentation](https://app.cirkitdesigner.com/) — Official tool for circuit schematics
+- [BIGTREETECH Manta M8P V2.0 GitHub](https://github.com/bigtreetech/Manta-M8P) — Schematics, pinout, and documentation for the Fracktal main board
+- [FracktalWorks Klipper IDEX Firmware](https://github.com/FracktalWorks/klipper_IDEX) — Official Klipper fork for Fracktal IDEX machines
 
 ---
 
@@ -384,7 +416,7 @@ Cirkit Designer supports basic simulation. For wiring verification:
 3. You need to crimp a JST-XH connector. What is the correct strip length for the wire?
 4. A TMC2208 stepper driver is installed in UART mode. Do you need to adjust the Vref potentiometer? Why or why not?
 5. List three wiring best practices and explain why each matters.
-6. On the MKS Robin Nano V3, which connector is used for BLTouch / CR Touch?
+6. On a Manta M8P V2.0, what interface is used to communicate with the RP2040 toolboard? At what baud rate?
 7. What is the difference between an XT30 and XT60 connector?
 
 ---

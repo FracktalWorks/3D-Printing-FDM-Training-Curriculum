@@ -9,12 +9,12 @@
 | Situation | Immediate Action |
 |-----------|----------------|
 | Fire / smoke from printer | Kill power switch → grab Class C extinguisher → evacuate if spreading |
-| Thermal runaway (temp climbing out of control) | Hit EMERGENCY STOP in Mainsail/OctoPrint → cut mains power |
+| Thermal runaway (temp climbing out of control) | Hit EMERGENCY STOP in OctoPrint → cut mains power |
 | Electrical burn/shock | Do NOT touch the person — kill power first, then call emergency services |
 | Thermal burn (skin contact with nozzle/bed) | Cool under cold running water for 10 minutes — do NOT apply ice |
 | Fume inhalation (ABS/ASA/resin) | Move to fresh air immediately — seek medical attention if symptoms persist |
 
-**Emergency Stop in Klipper/Mainsail:** Large red button in the Mainsail/Fluidd web interface, or send `M112` in the console.
+**Emergency Stop in Klipper/OctoPrint:** Large red button in the OctoPrint web interface, or send `M112` in the terminal.
 
 **Fire Extinguisher location:** Within 2 meters of every printer. Class C (CO₂ or dry chemical) rated. Check label monthly.
 
@@ -75,7 +75,7 @@
 
 | Rule | Details |
 |------|---------|
-| **Never leave a print fully unattended** | Check every 30 minutes minimum. Use webcam + Mainsail remote alerts for after-hours monitoring. |
+| **Never leave a print fully unattended** | Check every 30 minutes minimum. Use webcam + OctoPrint remote alerts for after-hours monitoring. |
 | **Thermal runaway protection must be ON** | Klipper: `thermal_runaway_hysteresis`, `thermal_runaway_timeout` must be set. Never disable. |
 | **ABS/ASA in enclosures** | Max chamber temp 105°C. Active ventilation required. Fire suppression device strongly recommended for overnight runs. |
 | **Keep area clear** | 500 mm clearance minimum around all printers. No cardboard boxes, paper, or flammable storage within 1 meter. |
@@ -110,7 +110,7 @@ The Twin Dragon is the only machine in the fleet with two independently moving p
    - Safe park position for head 1 (right): X = 300 (far right rail)
    - Test manually by running the parking macro with no filament loaded, before the actual print.
 
-2. **Never manually jog both X motors simultaneously** from the Mainsail interface without understanding their independent positions. Unexpected collision can occur.
+2. **Never manually jog both X motors simultaneously** from the OctoPrint interface without understanding their independent positions. Unexpected collision can occur.
 
 3. **Always run `G28` for full homing** before any IDEX print — partial homing (X-only or Y-only) may leave one head at an unknown position.
 
@@ -151,7 +151,7 @@ SAFETY CHECKLIST — ALL MACHINES
 □ Fire extinguisher present and accessible within 2 meters
 □ Fume extraction running (for ABS/ASA/Nylon)
 □ Print will be monitored — webcam or physical presence
-□ Emergency stop location known (Mainsail red button or M112)
+□ Emergency stop location known (OctoPrint red button or M112)
 □ Machine is registered in Fracktory with operator name
 ```
 

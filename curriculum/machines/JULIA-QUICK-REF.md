@@ -1,7 +1,7 @@
 # Julia — Machine Quick Reference
 
-> One-page cheat sheet for daily operation, calibration, and first-line troubleshooting.
-> Keep this open during any Julia maintenance or setup session.
+> ⚠️ **ARCHIVED / NOT IN CURRENT FLEET** — Julia is not part of the current Fracktal Works machine lineup. No official manual is available.
+> This file is retained for historical reference only. For current machines, refer to [Snowflake](SNOWFLAKE-QUICK-REF.md), [Dragon](DRAGON-QUICK-REF.md), or [Twin Dragon](TWIN-DRAGON-QUICK-REF.md).
 
 ---
 
@@ -12,7 +12,7 @@
 | **Motion System** | CoreXY (compact) |
 | **Build Volume** | 250 × 250 × 250 mm |
 | **Control Board** | MKS Robin Nano V3 (STM32F407) |
-| **Firmware** | Klipper + Fluidd |
+| **Firmware** | Marlin |
 | **Stepper Drivers** | TMC2208 (UART) |
 | **Extruder** | Direct Drive |
 | **Max Hotend Temp** | 280°C |
@@ -134,7 +134,7 @@ tail -f ~/printer_data/logs/klippy.log
 | Board | MKS Monster8 | MKS Robin Nano V3 |
 | Drivers | TMC2209 | TMC2208 (lower power) |
 | Probe | BLTouch | CR Touch |
-| Web UI | Mainsail | Fluidd |
+| Web UI | OctoPrint | OctoPrint |
 | Max temp | 300°C | 280°C |
 | Build volume | 300³ | 250³ |
 | Current budget | Higher | Lower — `run_current` max 0.8 A |

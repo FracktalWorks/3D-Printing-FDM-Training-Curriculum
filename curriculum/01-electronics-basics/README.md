@@ -40,9 +40,9 @@ The **PSU (Power Supply Unit)** converts mains AC voltage (110V or 230V) to DC v
 
 | Voltage | Used For |
 |---------|---------|
-| **24V** | Modern standard — most printers (Prusa, Bambu, Creality Ender S1 and newer) |
+| **24V** | Modern standard — most printers (Fracktal Dragon, Twin Dragon, Snowflake) |
 | **12V** | Older designs (original Ender 3, RAMPS-based printers) |
-| **48V** | High-performance printers (Bambu Lab, high-speed builds) |
+| **48V** | High-performance printers (high-speed industrial builds) |
 
 ### Key Specs
 
@@ -72,7 +72,7 @@ The **control board** is the brain of the printer. It:
 | **BTT SKR Mini E3 V3** | 24V | STM32 | TMC2209 (integrated) | Ender 3 upgrades |
 | **BTT Octopus** | 24V | STM32 | 8 drivers (plug-in) | Large multi-axis builds |
 | **Duet 3 Mini 5+** | 24V | SAME54 | TMC2240 | Professional, RepRapFirmware |
-| **Prusa Buddy** | 24V | STM32 | TMC2209 | Prusa MK4 (proprietary) |
+| **Manta M8P V2.0** | 24V | STM32H723 | TMC5160 onboard | Fracktal Dragon, Twin Dragon (Klipper); Snowflake (Marlin) |
 
 ### Board Anatomy
 

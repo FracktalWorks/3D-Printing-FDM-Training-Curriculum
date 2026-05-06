@@ -23,7 +23,7 @@ Klipper (covered briefly in Module 03) runs on a Raspberry Pi and enables featur
 ### 1.1 Installation Overview
 
 ```
-Raspberry Pi (or SBC) → runs Klipper host + Moonraker API + Mainsail/Fluidd web UI
+Raspberry Pi (or SBC) → runs Klipper host + OctoPrint web UI
          ↕ USB serial
 MCU (printer board)   → runs Klipper firmware (step generation only)
 ```
@@ -31,7 +31,7 @@ MCU (printer board)   → runs Klipper firmware (step generation only)
 **Klipper Stack**:
 - **Klipper**: Core firmware — runs on Pi
 - **Moonraker**: REST API layer
-- **Mainsail or Fluidd**: Web interface (browser-based printer control)
+- **OctoPrint**: Web interface (browser-based printer control)
 - **KIAUH**: Easy installer script ([github.com/dw-0/kiauh](https://github.com/dw-0/kiauh))
 
 ### 1.2 printer.cfg Basics
@@ -134,8 +134,7 @@ Multi-material systems use a **filament switching mechanism** that:
 
 | System | Printer | Type | Filaments | Purge Method |
 |--------|---------|------|----------|-------------|
-| **Prusa MMU3** | Prusa MK4 / MK3S | Selector (FINDA-based) | Up to 5 | Purge tower or wipe |
-| **Bambu AMS** | Bambu Lab printers | Automated buffered feeder | Up to 16 (4 AMS) | Purge tower |
+| **Twin Dragon IDEX (Fracktal)** | Twin Dragon | Independent Dual Extrusion (IDEX) | 2 | No purge (T1 parks) |
 | **ERCF (Enraged Rabbit)** | Any Klipper printer | DIY filament changer | Up to 12 | Purge tower / wipe |
 | **Toolchanger (Tapchanger)** | Custom / Voron | Multiple toolheads | Unlimited | No purge needed |
 
@@ -163,7 +162,7 @@ The part coming off the printer is just the starting point. Post-processing unlo
 
 - Use flush cutters for Bowden-style supports near surfaces
 - Use needle-nose pliers for tree supports
-- **Support interface layers** (PrusaSlicer, Cura) create a weak bond — easier removal with cleaner surfaces
+- **Support interface layers** (Fracktory/Cura) create a weak bond — easier removal with cleaner surfaces
 
 ### 3.2 Sanding
 
@@ -266,7 +265,7 @@ A **print farm** is multiple printers running simultaneously for production-scal
 
 ### Key Concepts
 
-- **OctoPrint / Fluidd**: Network management of multiple printers
+- **OctoPrint**: Network management and monitoring of printers
 - **Octoeverywhere / Obico**: Remote monitoring, print failure detection
 - **Slicer queuing**: Slice once, send to multiple printers
 - **Quality control**: Every part off the farm gets a dimensional check and visual inspection

@@ -1,15 +1,15 @@
-# Module 5: Printer Operations — Slicing, OctoPrint, Klipper, and Drybox
+# Module 5: Printer Operations — Slicing, Wi-Fi Printing, Klipper, and Drybox
 
-> End-to-end operational knowledge for running production-quality prints — from loading filament and slicing a model to monitoring jobs remotely via OctoPrint, configuring Klipper macros, and maintaining filament quality with a drybox.
+> End-to-end operational knowledge for running production-quality prints — from loading filament and slicing a model with Fracktory to monitoring jobs remotely via OctoPrint, configuring Klipper macros, and maintaining filament quality with a drybox.
 
 ## 🎯 Learning Objectives
 
 After completing this module, you will be able to:
-- Slice a 3D model with correct settings for each of our four machines
-- Start, monitor, and manage print jobs via OctoPrint and Mainsail
+- Slice a 3D model with correct settings for each of our three machines (Snowflake, Dragon, Twin Dragon)
+- Start, monitor, and manage print jobs via Fracktory and OctoPrint
 - Configure and use Klipper macros for common operations (START_PRINT, END_PRINT)
 - Set up and use the drybox system to prevent moisture-related print failures
-- Use Fracktory for print job management and machine status tracking
+- Use Fracktory for Wi-Fi print sending and machine status tracking
 - Perform PID tuning for hotend and heated bed
 - Understand and apply key slicer parameters (layer height, infill, supports, speeds)
 
@@ -24,9 +24,8 @@ After completing this module, you will be able to:
 
 | Tool | Purpose |
 |------|---------|
-| OrcaSlicer (latest) | Primary slicer for all Klipper machines |
-| PrusaSlicer (latest) | Secondary slicer — Marlin reference profiles |
-| Browser (Chrome/Firefox) | Mainsail, Fluidd, OctoPrint web interfaces |
+| Fracktory Slicer (latest) | Primary slicer for all Fracktal machines — download: http://printers.fracktory.in/download |
+| Browser (Chrome/Firefox) | OctoPrint web interface (Dragon, Twin Dragon) |
 | VS Code with Remote SSH | Editing `printer.cfg` macros |
 | Fracktory account | Print job logging and monitoring |
 | SSH client | Accessing printer Pi hosts |
@@ -41,7 +40,7 @@ After completing this module, you will be able to:
 ## ⚠️ Safety Guidelines
 
 1. **Never print ABS or ASA without fume extraction.** Styrene fumes emitted at 240°C+ are an irritant and potential carcinogen. Start the exhaust fan before heating the hotend.
-2. **Don't leave prints unattended overnight without alerts.** Configure Mainsail temperature alerts or Fracktory notifications before leaving the lab.
+2. **Don't leave prints unattended overnight without alerts.** Configure OctoPrint temperature alerts or Fracktory notifications before leaving the lab.
 3. **Drying filament in a kitchen oven:** Use a standalone thermometer to verify actual temperature. Oven thermostats are often off by ±20°C — too hot deforms the spool.
 4. **Never slice with incorrect bed dimensions.** A print that exceeds bed bounds will crash the carriage into the frame at full speed.
 5. **Verify `START_PRINT` macro parameter names match the slicer's output.** A mismatch causes the macro to run cold, failing the first layer.
@@ -54,16 +53,25 @@ After completing this module, you will be able to:
 
 A **slicer** converts a 3D model (STL, STEP, OBJ) into **G-code** — a text file of movement and temperature commands that the printer executes.
 
-### 1.1 Recommended Slicers
+### 1.1 Fracktory Slicer — Our Primary Tool
 
-| Slicer | Cost | Best For | Notes |
-|--------|------|---------|-------|
-| **PrusaSlicer** | Free | Most FDM printers | Best profile management, Klipper support |
-| **Cura** | Free | Beginners, Creality machines | Large plugin ecosystem |
-| **OrcaSlicer** | Free | Klipper-based machines | Best Klipper integration, pressure advance calibration |
-| **Simplify3D** | Paid | Multi-process complex prints | Legacy tool, less actively updated |
+**Fracktory** is a free, Fracktal-customised slicer built on top of the industry-standard open-source Cura engine. It comes pre-configured with printer profiles and material settings specifically tuned for Fracktal machines (Snowflake, Dragon, Twin Dragon).
 
-**Recommended for our machines:** **OrcaSlicer** (Klipper) and **PrusaSlicer** (Marlin)
+| Feature | Detail |
+|---------|--------|
+| **Download** | http://printers.fracktory.in/download |
+| **Platform** | Windows (Vista+, 64-bit), macOS (10.11+), Linux (Ubuntu 14.04+) |
+| **RAM** | 4 GB minimum |
+| **OpenGL** | 2.0 minimum (4.1 for 3D layer view) |
+| **Based on** | Ultimaker Cura (open source) |
+| **Pre-loaded profiles** | Snowflake, Dragon (400/500/700), Twin Dragon (300/400/600) |
+
+**Why Fracktory instead of generic slicers?**
+- Machine profiles are pre-configured with correct bed size, nozzle diameter, and max temperatures — no manual setup required.
+- Material profiles are validated against Fracktal's own material compatibility sheet.
+- Start/end G-code and Wi-Fi printing workflow are pre-set for each machine.
+
+**Recommended for our machines: Fracktory Slicer (all machines)**
 
 ### 1.2 Essential Slicer Parameters
 
@@ -128,28 +136,30 @@ A **slicer** converts a 3D model (STL, STEP, OBJ) into **G-code** — a text fil
 - Z distance: 0.20 mm (gap between support and part)
 - XY distance: 0.60 mm
 
-### 1.3 Generating G-code for Our Machines
+### 1.3 Generating G-code in Fracktory
 
-**In OrcaSlicer:**
-1. Click **File → Import → Import 3MF or STL**
-2. Select the printer profile matching your machine (Snowflake, Julia, Dragon, Twin Dragon)
-3. Select material profile (PLA, PETG, ABS)
-4. Review orientation — minimize supports where possible
-5. Click **Slice Now**
-6. Review layer preview — pay special attention to first layer, supports, and bridging
-7. Export: **File → Export → Export G-code**
-8. Save to SD card or upload to OctoPrint/Mainsail
+1. Open Fracktory — on first launch, select your printer model from the list (Snowflake, Dragon 400/500/700, Twin Dragon 300/400/600).
+2. Click the **Open File** button (top-left) and select your STL or 3MF file.
+3. The model loads onto the virtual build plate at the correct bed dimensions for your machine.
+4. **Material assignment:** Click the material dropdown on the right sidebar → select the material you have loaded.
+5. **Nozzle diameter:** Match the nozzle installed on your printer (0.4 mm default, 0.6 mm or 0.8 mm for Dragon/Twin Dragon).
+6. Adjust orientation — minimize supports where possible (auto-orient button available).
+7. Click **Slice** — Fracktory computes layers, paths, and support structures.
+8. Review the layer preview — pay attention to first layer coverage, support placement, and bridge spans.
+9. **Save/Print:**
+   - Save to USB stick and walk it to the printer, OR
+   - Use **Wi-Fi Printing** (see Section 5.2 of Dragon/Twin Dragon manuals) to send directly to the printer's web interface.
 
 ### 1.4 Slicer Start/End G-code
 
 The **start G-code** is custom code that runs at the beginning of every print. For Klipper machines, use macros:
 
-**Klipper start G-code in slicer:**
+**Fracktory start G-code (pre-configured for Fracktal machines):**
 ```gcode
-START_PRINT BED_TEMP={first_layer_bed_temperature[0]} EXTRUDER_TEMP={first_layer_temperature[0]}
+START_PRINT BED_TEMP={material_bed_temperature} EXTRUDER_TEMP={material_print_temperature}
 ```
 
-> 💡 **How this works:** OrcaSlicer resolves `{first_layer_bed_temperature[0]}` to the actual number you set (e.g., `60`), so the printer receives `START_PRINT BED_TEMP=60 EXTRUDER_TEMP=200`. The macro then reads `params.BED_TEMP` and `params.EXTRUDER_TEMP`. The placeholder names in curly braces are OrcaSlicer variables — they are **not** what the printer sees. If you use PrusaSlicer instead, the placeholder names differ: use `{first_layer_bed_temperature}` (no index) and `{first_layer_temperature[0]}`.
+> 💡 **How this works:** Fracktory (Cura-based) resolves `{material_bed_temperature}` to the actual number from the material profile (e.g., `60`), so the printer receives `START_PRINT BED_TEMP=60 EXTRUDER_TEMP=210`. The Klipper macro then reads `params.BED_TEMP` and `params.EXTRUDER_TEMP`. These curly-brace placeholders are Fracktory variables resolved at slice time — the printer only sees the resolved values. **Do not change the start G-code unless you understand Klipper macro parameter passing.**
 
 **Klipper end G-code in slicer:**
 ```gcode
@@ -220,26 +230,46 @@ gcode:
 
 ---
 
-## 2. OctoPrint
+## 2. Wi-Fi Printing with Fracktory
 
-**OctoPrint** is a web-based print server that runs on a Raspberry Pi. It lets you upload G-code, start prints, monitor via webcam, and control the printer from any device on the network.
+All Fracktal Works machines support **Wi-Fi printing** directly from the Fracktory slicer. After slicing, click **Print over Network** — Fracktory uploads the G-code to the printer via its IP address.
 
-### 2.1 Accessing OctoPrint
+### 2.1 Network Setup
 
-1. Ensure your laptop is on the same network as the Raspberry Pi.
-2. Open a browser and navigate to the Pi's IP address (e.g., `http://192.168.1.101`).
-3. Log in with your credentials.
-4. The OctoPrint dashboard shows printer status, temperature graphs, and file list.
+Ensure your laptop is on the same Wi-Fi or LAN as the printers. Default IP addresses:
 
-### 2.2 OctoPrint Interface Overview
+| Machine | IP Address | Web Interface |
+|---------|-----------|-------------|
+| Snowflake | 192.168.1.101 | File transfer only (Marlin — no web UI; use LCD or USB) |
+| Dragon | 192.168.1.103 | http://192.168.1.103 (OctoPrint) |
+| Twin Dragon | 192.168.1.104 | http://192.168.1.104 (OctoPrint) |
+
+### 2.2 Printing via Fracktory (Wi-Fi)
+
+1. Slice your model in Fracktory.
+2. Click the **Print** button (top right) → select **Print over Network**.
+3. Fracktory uploads the `.gcode` file to the printer (Dragon and Twin Dragon: OctoPrint interface; Snowflake: file transfer to LAN address).
+4. The printer heats up and starts printing automatically.
+5. Monitor progress: Dragon/Twin Dragon — open the printer's IP in a browser (OctoPrint). Snowflake — watch the LCD display.
+
+### 2.3 Printing via USB
+
+If Wi-Fi is unavailable:
+1. Save G-code to a USB drive from Fracktory: **File → Save G-code to disk**.
+2. Insert USB drive into the printer's USB port.
+3. On the touchscreen: **Print → USB → select file → Start**.
+
+### 2.4 OctoPrint Web Interface Overview (Dragon / Twin Dragon)
+
+Open the printer's IP in any browser for full control:
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│  [Temperature]  [Control]  [Terminal]  [Timelapse]          │
+│  [Dashboard]  [Files]  [Config]  [Console]  [History]       │
 │                                                             │
-│  Temperatures: Hotend: 200°C / Bed: 60°C                   │
+│  Temperatures: Hotend: 215°C / Bed: 60°C                   │
 │                                                             │
-│  [Upload G-code]  [File List with Print/Delete]             │
+│  [Macro Buttons: HOME_ALL | BED_MESH | CANCEL_PRINT]        │
 │                                                             │
 │  [Webcam Feed]                   [Progress Bar]             │
 │                                                             │
@@ -247,60 +277,36 @@ gcode:
 └─────────────────────────────────────────────────────────────┘
 ```
 
-### 2.3 Uploading and Starting a Print
-
-1. Click **Upload** (folder icon) — select G-code file.
-2. File appears in the file list with estimated print time.
-3. Click the **print** icon (▶) next to the file.
-4. OctoPrint sends heating commands → printer heats up → print begins.
-5. Monitor temperature graph — hotend and bed should reach target within 3–5 minutes.
-
-### 2.4 Useful OctoPrint Plugins
-
-| Plugin | Purpose |
-|--------|---------|
-| **OctoEverywhere** | Remote access from outside your local network (securely) |
-| **Bed Visualizer** | Visualize BLTouch mesh as a 3D heatmap |
-| **PrintTimeGenius** | More accurate print time estimation |
-| **Octolapse** | Timelapse generation synchronized with layer changes |
-| **FilamentManager** | Track filament usage and remaining spool weight |
-| **MQTT (Message Queuing Telemetry Transport)** | Integration with home automation / Fracktory |
-
 ### 2.5 OctoPrint Terminal — Direct Commands
 
-The **Terminal** tab lets you send G-code commands directly:
-
 ```gcode
-M105           ; Query current temperatures
-M503           ; Report all EEPROM settings (Marlin)
-G28            ; Home all axes
-G0 X150 Y150 Z10  ; Move to center, 10mm height
-M104 S200      ; Set hotend to 200°C (don't wait)
-M109 S200      ; Set hotend to 200°C (wait until reached)
-M140 S60       ; Set bed to 60°C
-M190 S60       ; Set bed to 60°C (wait)
-M84            ; Disable all steppers
+G28                     ; Home all axes
+BED_MESH_CALIBRATE      ; Run auto bed leveling
+PROBE_CALIBRATE         ; Z-offset calibration
+M104 S200               ; Set hotend to 200°C
+M140 S60                ; Set bed to 60°C
+CANCEL_PRINT            ; Cancel current print (safe — retracts and parks)
+M112                    ; EMERGENCY STOP
 ```
 
 ---
 
-## 3. Mainsail and Fluidd (Klipper Interfaces)
+## 3. OctoPrint (Dragon & Twin Dragon Web Interface)
 
-Our Klipper-based machines (Snowflake, Dragon, Twin Dragon) use **Mainsail** or **Fluidd** — web interfaces for Klipper that are more powerful than OctoPrint for Klipper.
+Dragon and Twin Dragon use **OctoPrint** — a web interface that provides full printer control from any browser on the lab network.
 
-### 3.1 Mainsail vs. Fluidd
+### 3.1 OctoPrint Overview
 
-| Feature | Mainsail | Fluidd |
-|---------|----------|--------|
-| UI Design | Dark, dashboard-focused | Clean, more compact |
-| Macro Panel | Yes — large buttons | Yes — sidebar |
-| Config Editor | Built-in | Built-in |
-| Spoolman Integration | Yes | Yes |
-| Klipper Exclusive | Yes | Yes |
+| Feature | Description |
+|---------|------------|
+| Temperature graphs | Live hotend and bed temperatures with history |
+| Macro buttons | One-click buttons for `START_PRINT`, `HOME_ALL`, `BED_MESH_CALIBRATE` |
+| File manager | Upload, preview, and start G-code files |
+| Config editor | Edit `printer.cfg` and `macros.cfg` directly in browser |
+| Console | Direct Klipper command input |
+| Camera feed | Live webcam (if installed) |
 
-Both are functionally equivalent — the choice is team preference.
-
-### 3.2 Console Commands in Mainsail/Fluidd (Klipper)
+### 3.2 Terminal Commands in OctoPrint (Klipper)
 
 ```
 G28                        ; Home all
@@ -427,15 +433,15 @@ SAVE_CONFIG
 
 **Fracktory** is a print farm management platform used to track machine status, print jobs, filament consumption, and operator assignments across all our printers.
 
-### 5.1 Connecting Printers to Fracktory
+### 5.1 What Fracktory Does
 
-1. Ensure the Raspberry Pi has internet access.
-2. Install the Fracktory agent on the Raspberry Pi:
-   ```bash
-   curl -sSL https://install.fracktory.com | bash
-   ```
-3. Enter the API key provided by your team lead.
-4. The printer will appear in the Fracktory dashboard within 2–3 minutes.
+**Fracktory** serves two roles in our lab:
+1. **Slicer** — The desktop application used to slice STL files and send print jobs to the machine (covered in Section 1).
+2. **Print management platform** — Tracks job history, filament usage, and machine status.
+
+**Download the latest Fracktory slicer:** http://printers.fracktory.in/download
+
+Register your machine in Fracktory during first setup — enter the serial number from the machine label to link it to your account and enable analytics.
 
 ### 5.2 Fracktory Dashboard Features
 
@@ -574,21 +580,25 @@ PRE-PRINT CHECKLIST — ALL MACHINES
 ## 8. Hands-On Exercises
 
 ### Exercise 5.1 — Slicing
-- [ ] Import a provided STL file into OrcaSlicer
-- [ ] Slice for Julia (PLA, 0.20 mm, 20% Gyroid infill)
+- [ ] Install Fracktory from http://printers.fracktory.in/download
+- [ ] On first launch, select your printer model (e.g., Snowflake or Dragon 400)
+- [ ] Import a provided STL file
+- [ ] Slice for Snowflake (PLA, 0.20 mm, 20% Gyroid infill)
 - [ ] Review layer preview — identify the number of layers and estimated time
-- [ ] Export G-code and verify the start/end macros are correct
+- [ ] Send to printer via Wi-Fi and verify the start G-code parameters
 
-### Exercise 5.2 — OctoPrint / Mainsail
-- [ ] Access Mainsail for Snowflake via browser
+### Exercise 5.2 — OctoPrint Web Interface (Dragon)
+- [ ] Open a browser and navigate to `http://192.168.1.103` (Dragon's OctoPrint)
+- [ ] Identify the temperature graph, macro buttons, and terminal
+- [ ] Send `G28` from the terminal and watch the axes home
 - [ ] Upload a G-code file and start a test print
-- [ ] Monitor the temperature graph for the first 5 minutes
-- [ ] Cancel the print using the emergency stop, then resume a new print correctly
+- [ ] Cancel the print cleanly using `CANCEL_PRINT` (not emergency stop)
+- [ ] Verify the nozzle lifts, parks, and temperatures return to 0
 
 ### Exercise 5.3 — Klipper Macros
-- [ ] Read the `macros.cfg` file on Snowflake via SSH
+- [ ] Read the `macros.cfg` file on Dragon via SSH
 - [ ] Identify the START_PRINT and END_PRINT macros
-- [ ] Run `START_PRINT BED_TEMP=60 EXTRUDER_TEMP=200` from the Mainsail console
+- [ ] Run `START_PRINT BED_TEMP=60 EXTRUDER_TEMP=200` from the OctoPrint Terminal tab
 - [ ] Observe the sequence of operations and verify each step completes
 
 ### Exercise 5.4 — PID Tuning
@@ -607,20 +617,20 @@ PRE-PRINT CHECKLIST — ALL MACHINES
 
 | Title | Channel | Why Watch |
 |-------|---------|-----------|
-| [OrcaSlicer Complete Guide](https://www.youtube.com/watch?v=RYRPvb5BI2o) | Softfever (OrcaSlicer) | Official tutorial covering all key features |
+| [Fracktory Quick Setup & Bed Calibration](https://www.youtube.com/watch?v=Tf-kSS7adt4) | Fracktal Works | Official Fracktory setup and bed calibration walkthrough |
 | [Klipper Setup from Scratch](https://www.youtube.com/watch?v=8vkM2Yoy7-M) | Ellis's Print Tuning | Complete Klipper install and config guide |
 | [Pressure Advance Calibration](https://www.youtube.com/watch?v=MkpCuFVq6aE) | Teaching Tech | Step-by-step pressure advance tuning |
 | [Filament Moisture — Why It Matters](https://www.youtube.com/watch?v=FAXUjZZER5E) | CNC Kitchen | Scientific test showing impact of moisture on print strength |
-| [OctoPrint Setup and Plugins](https://www.youtube.com/watch?v=HBd0olxI-No) | Teaching Tech | OctoPrint install, config, and best plugins |
+| [OctoPrint Setup Guide](https://www.youtube.com/watch?v=RtYPbh3SPOE) | Teaching Tech | OctoPrint features and setup for 3D printers |
 
 ---
 
 ## 📚 Further Reading
 
+- [Fracktory Software & User Manual](https://care.fracktal.in/portal/en/kb/articles/fractory-software-and-user-manual) — Official Fracktory documentation and download links
+- [Fracktal Works Official Website](https://www.fracktal.in) — Hardware, software, and support for all Fracktal machines
 - [Klipper Documentation](https://www.klipper3d.org/Overview.html) — Complete official Klipper reference
 - [Ellis's Print Tuning Guide](https://ellis3dp.com/Print-Tuning-Guide/) — The most comprehensive Klipper print quality tuning guide available
-- [OrcaSlicer Wiki](https://github.com/SoftFever/OrcaSlicer/wiki) — All OrcaSlicer features and calibration tools
-- [OctoPrint Plugin Repository](https://plugins.octoprint.org/) — Browse all OctoPrint plugins
 - [Filament Drying Guide — CNC Kitchen](https://www.cnckitchen.com/blog/how-to-dry-your-filament) — Data-backed filament drying research
 
 ---
@@ -630,7 +640,7 @@ PRE-PRINT CHECKLIST — ALL MACHINES
 1. What does pressure advance compensate for, and what print defect does it prevent at corners?
 2. A PETG print is making crackling sounds during extrusion. What is the likely cause and what immediate action do you take?
 3. The temperature graph for Snowflake's hotend shows ±8°C oscillation around 200°C. What calibration procedure do you run?
-4. Write the OrcaSlicer start G-code for a Klipper machine that passes bed and extruder temperatures to the START_PRINT macro.
+4. Write the Fracktory start G-code for a Klipper machine that passes bed and extruder temperatures to the START_PRINT macro.
 5. Twin Dragon is in Duplication Mode. Describe what both heads do and when you would use this mode.
 6. What is the target relative humidity inside a drybox when storing Nylon filament?
 7. A print in Fracktory shows as "In Progress" but the machine is idle. What steps do you take?

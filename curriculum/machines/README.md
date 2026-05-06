@@ -7,12 +7,12 @@
 
 ## Fleet Overview
 
-| Machine | Type | Volume | Max Temp | Board | Quick Ref |
-|---------|------|--------|---------|-------|----------|
-| **Snowflake** | CoreXY, Direct Drive | 300×300×300 mm | 300°C | MKS Monster8 | [SNOWFLAKE-QUICK-REF.md](SNOWFLAKE-QUICK-REF.md) |
+| Machine | Type | Volume | Max Temp | Firmware | Board | Quick Ref |
+|---------|------|--------|---------|---------|-------|----------|
+| **Snowflake** | CoreXY, Dual-Gear Drive | 200×200×200 mm | 265°C | Marlin | Manta M8P V2.0 | [SNOWFLAKE-QUICK-REF.md](SNOWFLAKE-QUICK-REF.md) |
 | **Julia** | CoreXY, Direct Drive | 250×250×250 mm | 280°C | MKS Robin Nano V3 | [JULIA-QUICK-REF.md](JULIA-QUICK-REF.md) |
-| **Dragon** | CoreXY, Bowden, Enclosed | 350×350×400 mm | 320°C | MKS Eagle | [DRAGON-QUICK-REF.md](DRAGON-QUICK-REF.md) |
-| **Twin Dragon** | CoreXY + IDEX (dual head) | 300×300×350 mm | 300°C | MKS Monster8 | [TWIN-DRAGON-QUICK-REF.md](TWIN-DRAGON-QUICK-REF.md) |
+| **Dragon** | CoreXY, Direct Drive | 400×300×400 mm | 300°C | Klipper | Manta M8P V2.0 | [DRAGON-QUICK-REF.md](DRAGON-QUICK-REF.md) |
+| **Twin Dragon** | CoreXY + IDEX (dual head) | 300×300×400 mm | 300°C | Klipper | Manta M8P V2.0 | [TWIN-DRAGON-QUICK-REF.md](TWIN-DRAGON-QUICK-REF.md) |
 
 ---
 

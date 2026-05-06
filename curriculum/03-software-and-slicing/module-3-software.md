@@ -29,7 +29,7 @@ After completing this module, you will be able to:
 | SSH client (built-in on macOS/Linux; OpenSSH on Windows) | Connecting to printer Raspberry Pi hosts |
 | [GitHub account](https://github.com) | Hosting printer config repositories |
 | [Cirkit Designer account](https://app.cirkitdesigner.com/) | Browser-based schematic tool — no install required |
-| Network access to printer LAN (192.168.1.101–104) | SSH and Mainsail/Fluidd access |
+| Network access to printer LAN (192.168.1.101–104) | SSH and OctoPrint web interface access |
 
 > 💡 **Optional but recommended:** Windows Terminal (better SSH experience on Windows) and WSL2 (native Linux commands on Windows).
 
@@ -121,7 +121,7 @@ printer-farm-configs/
 │   ├── printer.cfg
 │   ├── macros.cfg
 │   └── slicer-profiles/
-├── julia/
+├── printer-configs/
 │   ├── printer.cfg
 │   └── macros.cfg
 ├── dragon/
@@ -203,13 +203,13 @@ Install these from the VS Code Extensions panel (`Ctrl+Shift+X`):
 3. In VS Code Remote Explorer, connect to the Pi.
 4. Navigate to `~/printer_data/config/printer.cfg`.
 5. Edit the file — changes are saved directly on the Pi.
-6. In OctoPrint or Fluidd, click **Firmware Restart** to apply changes.
+6. In OctoPrint, go to the **Terminal** tab and send `FIRMWARE_RESTART` to apply changes.
 
 ---
 
 ## 3. Linux Command Line Basics
 
-The Raspberry Pi running OctoPrint or Klipper uses **Linux (typically Raspberry Pi OS or MainsailOS)**. You must be comfortable with the terminal.
+The Raspberry Pi CM4 running Klipper uses **Linux (OctoPi OS)**. You must be comfortable with the terminal.
 
 ### 3.1 Essential Commands
 

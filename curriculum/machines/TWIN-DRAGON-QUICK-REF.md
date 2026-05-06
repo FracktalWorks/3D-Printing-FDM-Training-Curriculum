@@ -11,17 +11,20 @@
 | Item | Value |
 |------|-------|
 | **Motion System** | CoreXY + IDEX (Independent Dual Extrusion) |
-| **Build Volume** | 300 × 300 × 350 mm |
-| **Build Volume (Duplication Mode)** | 2× 150 × 300 × 350 mm |
-| **Control Board** | MKS Monster8 (STM32F407, 8 drivers) |
-| **Firmware** | Klipper + Mainsail + IDEX macros |
-| **Stepper Drivers** | TMC2209 (UART, both extruders) |
-| **Extruders** | Dual Direct Drive (E3D V6 × 2, 0.4 mm each) |
+| **Build Volume** | 300 × 300 × 400 mm (TD 300) |
+| **Build Volume (Duplication Mode)** | 2× 150 × 300 × 400 mm |
+| **Control Board** | BIGTREETECH Manta M8P V2.0 + RP2040 toolboards T0/T1 (CAN bus) |
+| **Firmware** | Klipper + OctoPrint + IDEX macros (FracktalWorks fork) |
+| **Stepper Drivers** | TMC5160 (onboard Manta M8P) |
+| **Extruders** | Dual BGM Direct Drive (IDEX) |
 | **Max Hotend Temp** | 300°C (both heads) |
 | **Max Bed Temp** | 110°C |
-| **Bed Surface** | PEI spring-steel (single shared bed) |
-| **Auto-leveling** | Dual BLTouch (one per head) |
-| **Host** | Raspberry Pi 4 (Mainsail) |
+| **Bed Surface** | PEI flexible build plate |
+| **Auto-leveling** | Yes (per-head) |
+| **HEPA Filter** | Yes — captures particulates from ABS/CF/Nylon |
+| **Display** | 5-inch Touchscreen |
+| **Connectivity** | USB, Wi-Fi, Ethernet |
+| **Host** | Raspberry Pi CM4 (OctoPrint) |
 | **Network** | `http://192.168.1.104` (or `http://twin-dragon`) |
 
 ---

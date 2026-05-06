@@ -49,7 +49,7 @@ Both motors drive the toolhead in X and Y simultaneously. The bed only moves in 
     Motor A - Motor B = Y movement
 ```
 
-**Examples**: Bambu Lab X1C, Voron 2.4, Prusa Core One, Creality K1
+**Examples**: Fracktal Snowflake, Dragon, Twin Dragon (all CoreXY)
 
 **Pros**: High speed, no bed mass limitation, better print quality at speed
 **Cons**: More complex belt path, belt tension matters more, harder to build/tune
@@ -171,7 +171,7 @@ The extruder motor is **remote** — mounted on the frame. Filament travels thro
 
 The extruder motor sits **on the toolhead**, directly above or adjacent to the hot end. No Bowden tube.
 
-**Examples**: Prusa MK3S+ (BMG-style), Bambu Lab X1C, E3D Hemera, Orbiter
+**Examples**: Dragon, Twin Dragon (BGM direct drive extruder)
 
 | Pros | Cons |
 |------|------|

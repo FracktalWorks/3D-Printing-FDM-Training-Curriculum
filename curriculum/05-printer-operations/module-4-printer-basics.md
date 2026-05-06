@@ -1,13 +1,13 @@
 # Module 4: 3D Printer Basics — FDM Machines and Components
 
-> A complete technical orientation to FDM 3D printing machines — how they work, what each component does, and machine-specific details for Snowflake, Julia, Dragon, and Twin Dragon.
+> A complete technical orientation to FDM 3D printing machines — how they work, what each component does, and machine-specific details for Snowflake, Dragon, and Twin Dragon.
 
 ## 🎯 Learning Objectives
 
 After completing this module, you will be able to:
 - Explain the FDM (Fused Deposition Modeling) process from first principles
 - Identify every major component of a 3D printer and its function
-- Describe the differences between our four machines (Snowflake, Julia, Dragon, Twin Dragon)
+- Describe the differences between our three machines (Snowflake, Dragon, Twin Dragon)
 - Configure bed leveling (manual and automatic with BLTouch/CR Touch)
 - Wire a hotend assembly including heater cartridge, thermistor, and part cooling fan
 - Understand extruder E-steps calibration and why it matters
@@ -27,13 +27,13 @@ After completing this module, you will be able to:
 | Hex key set (1.5–5 mm) | Extruder and hotend assembly |
 | Tweezers (ESD-safe, heat-resistant) | Handling hotend components |
 | Sheet of A4 paper (80 g/m²) | Z-offset calibration (paper drag test) |
-| OrcaSlicer (installed on laptop) | Slicing test prints for calibration |
-| Mainsail / Fluidd web interface (browser) | Klipper console commands |
+| Fracktory (installed on laptop) | Slicing test prints for calibration |
+| OctoPrint web interface (browser) | Klipper Terminal commands (Dragon, Twin Dragon) |
 | VS Code with Remote SSH | Editing `printer.cfg` |
 | Infrared thermometer (optional) | Verifying bed surface temperature |
 | Torque driver (1.5–2.0 N·m) | Hot-tightening nozzle at temperature |
 
-> 📌 **Machine access required:** At least one of Snowflake, Julia, Dragon, or Twin Dragon powered on and connected.
+> 📌 **Machine access required:** At least one of Snowflake, Dragon, or Twin Dragon powered on and connected.
 
 ---
 
@@ -102,7 +102,7 @@ Motion System:
 Control:
   [Control Board] → drives motors, reads sensors, controls heaters
   [Firmware] (Marlin or Klipper) → interprets G-code
-  [Host] (Raspberry Pi + OctoPrint/Mainsail) → sends G-code to board
+  [Host] (Raspberry Pi + OctoPrint) → sends G-code to board
 ```
 
 ---
@@ -111,85 +111,111 @@ Control:
 
 ### 3.1 Snowflake
 
+The **Snowflake** is a compact desktop FDM printer built by Fracktal Works. It is designed as a plug-and-play machine with pre-configured Fracktory slicer profiles.
+
 | Spec | Value |
 |------|-------|
+| **Model** | Snowflake (Nov 2025) |
 | **Motion System** | CoreXY |
-| **Build Volume** | 300 × 300 × 300 mm |
-| **Extruder Type** | Direct Drive |
-| **Control Board** | MKS Monster8 |
+| **Build Volume** | 200 × 200 × 200 mm |
+| **Machine Dimensions** | 572 × 300 × 456 mm (L×B×H) |
+| **Extruder Type** | Dual-Gear Drive (direct drive) |
+| **Firmware** | Marlin |
+| **Interface** | 2.8-inch LCD Dial Display (no web interface) |
+| **Bed** | PEI flexible build plate |
+| **Auto-leveling** | Load Cell Bed Levelling |
+| **Max Hotend Temp** | 265°C |
+| **Max Bed Temp** | 100°C |
+| **Nozzle** | 0.4 mm (standard); 0.25 mm, 0.6 mm LT; 0.6 mm HT; 0.6 mm HH |
+| **Connectivity** | USB, LAN |
+| **Power** | 500 W |
+| **Net Weight** | 16 kg |
+| **Filament Diameter** | 1.75 mm |
+| **Network URL** | `http://192.168.1.101` |
+
+**Compatible materials (Snowflake):** PLA, PLA+, HIPS, PETG, eFLEX, TPU (85A, 98A)
+
+**Notes:**
+- Snowflake is the entry-level/training machine — freshers begin calibration exercises here
+- Load cell bed levelling (built-in to print head) — no external probe hardware
+- Filament runout sensor included — pauses print automatically when spool is empty
+- Power loss recovery supported — resumes print from where it stopped after a power cut
+
+### 3.2 Dragon (Industrial FDM)
+
+The **Dragon** is Fracktal Works' industrial-grade large-format FDM printer. It is designed for printing large components at superior quality.
+
+| Spec | Dragon 400 | Dragon 500 | Dragon 700 |
+|------|-----------|-----------|----------|
+| **Print Volume (mm)** | 400 × 300 × 400 | 500 × 400 × 400 | 700 × 600 × 400 |
+| **Machine Dims (mm)** | 1050 × 790 × 840 | 1135 × 905 × 835 | 1335 × 1185 × 840 |
+| **Max Speed** | 600 mm/s | 400 mm/s | 300 mm/s |
+| **Power (W)** | 1000 | 1200 | 1700 |
+| **Net Weight (kg)** | 150 | 150 | 200 |
+
+**Common specs across all Dragon variants:**
+
+| Spec | Value |
+|------|-------|
+| **Technology** | FDM |
+| **Extruder** | Direct drive |
 | **Firmware** | Klipper |
-| **Host** | Raspberry Pi 4 (Mainsail) |
-| **Bed** | PEI spring-steel magnetic sheet |
-| **Auto-leveling** | BLTouch |
-| **Nozzle** | 0.4 mm brass (standard), 0.6 mm hardened steel (abrasives) |
+| **Web Interface** | OctoPrint |
+| **Display** | 5-inch Touchscreen |
+| **Nozzle diameters** | 0.4 mm (LT, HT), 0.6 mm / 0.8 mm (LT, HT, HH) |
 | **Max Hotend Temp** | 300°C |
 | **Max Bed Temp** | 110°C |
+| **Auto-leveling** | Yes |
+| **Filament Runout Sensor** | Yes |
+| **Connectivity** | USB, Wi-Fi, Ethernet |
+| **Filament Diameter** | 1.75 mm |
+| **Network URL** | `http://192.168.1.103` |
+
+**Compatible materials:** PLA, PLA+, ABS, HIPS, PETG, TPU (85A, 98A), Nylon (PA), GF-PA, CF-PA, PC, PVA, soluble support
 
 **Notes:**
-- Snowflake is our primary production machine — treat it with priority care
-- Uses TMC2209 drivers in UART mode (silent operation)
-- BLTouch mounts to carriage left side — do not disassemble without recording probe offset
-
-### 3.2 Julia
-
-| Spec | Value |
-|------|-------|
-| **Motion System** | CoreXY |
-| **Build Volume** | 250 × 250 × 250 mm |
-| **Extruder Type** | Direct Drive |
-| **Control Board** | MKS Robin Nano V3 |
-| **Firmware** | Klipper |
-| **Host** | Raspberry Pi 3B+ (Fluidd) |
-| **Bed** | Glass with PEI coating |
-| **Auto-leveling** | CR Touch |
-| **Nozzle** | 0.4 mm brass |
-| **Max Hotend Temp** | 280°C |
-| **Max Bed Temp** | 100°C |
-
-**Notes:**
-- Julia is the training machine — freshers do calibration exercises here
-- CR Touch probe offset: X offset = -38 mm, Y offset = +3 mm (verify before printing)
-- TMC2208 drivers — configured via UART in Klipper
-
-### 3.3 Dragon
-
-| Spec | Value |
-|------|-------|
-| **Motion System** | CoreXY |
-| **Build Volume** | 350 × 350 × 400 mm |
-| **Extruder Type** | Bowden (default), Direct Drive upgrade available |
-| **Control Board** | MKS Eagle |
-| **Firmware** | Klipper |
-| **Host** | Raspberry Pi 4 (Mainsail) |
-| **Bed** | Heated aluminum + PEI sheet |
-| **Auto-leveling** | BLTouch |
-| **Nozzle** | 0.4–0.8 mm (task dependent) |
-| **Max Hotend Temp** | 320°C |
-| **Max Bed Temp** | 120°C |
-
-**Notes:**
-- Dragon is our large-format machine for production parts
-- With Bowden setup: retraction = 4–6 mm. With Direct Drive: retraction = 0.5–1.5 mm
-- High-temp capable — use for PETG, ABS, ASA, and Nylon
+- Dragon is the large-format production machine — used for structural/industrial parts
+- High-temp capable — use for PETG, ABS, ASA, Nylon, PC
+- 5-inch touchscreen + Wi-Fi — can print directly from Fracktory over Wi-Fi
 - CAN bus wiring on toolhead — do not disconnect CAN connector while powered
 
-### 3.4 Twin Dragon (IDEX)
+### 3.3 Twin Dragon (IDEX)
+
+The **Twin Dragon** is Fracktal Works' dual-extrusion machine built on IDEX (Independent Dual Extrusion) technology, where each print head moves independently on its own X-axis.
+
+| Spec | TD 300 | TD 400 | TD 600 |
+|------|--------|--------|--------|
+| **Print Volume (mm)** | 300 × 300 × 400 | 400 × 400 × 400 | 600 × 600 × 400 |
+| **Machine Dims (mm)** | 1050 × 790 × 840 | 1135 × 905 × 835 | 1335 × 1185 × 840 |
+| **Power (W)** | 1000 | 1250 | 1750 |
+| **Net Weight (kg)** | 250 | 250 | 250 |
+
+**Common specs across all Twin Dragon variants:**
 
 | Spec | Value |
 |------|-------|
-| **Motion System** | CoreXY + IDEX (Independent Dual Extruder) |
-| **Build Volume** | 300 × 300 × 350 mm (per head) |
-| **Extruder Type** | Dual Direct Drive |
-| **Control Board** | MKS Monster8 |
-| **Firmware** | Klipper (with IDEX configuration) |
-| **Host** | Raspberry Pi 4 (Mainsail) |
-| **Bed** | Full-width PEI flexible sheet |
-| **Auto-leveling** | Dual BLTouch (one per head) |
-| **Nozzle** | T0: 0.4 mm brass | T1: 0.4 mm hardened steel |
-| **Max Hotend Temp** | 300°C (both) |
+| **Technology** | FDM + IDEX |
+| **Extruder** | Dual Direct Drive (BGM Extruder) — Tool 0 and Tool 1 independent |
+| **Firmware** | Klipper (IDEX configuration) |
+| **Web Interface** | OctoPrint |
+| **Display** | 5-inch Touchscreen |
+| **Max Speed** | Up to 500 mm/s |
+| **Nozzle diameters** | 0.4 mm (LT, HT), 0.6 mm / 0.8 mm (LT, HT, HH) |
+| **Max Hotend Temp** | 300°C (both heads) |
 | **Max Bed Temp** | 110°C |
+| **Auto-leveling** | Yes |
+| **Filament Runout Sensor** | Yes (Tool 0 and Tool 1) |
+| **HEPA Filter** | Yes — captures particulate matter from ABS/Nylon prints |
+| **Storage Table** | Built-in filament storage compartment with wheels |
+| **Connectivity** | USB, Wi-Fi, Ethernet |
+| **Filament Diameter** | 1.75 mm |
+| **Network URL** | `http://192.168.1.104` |
 
-**IDEX Modes:**
+**Compatible materials:** PLA, PLA+, ABS, HIPS, PETG, TPU (85A, 98A), Nylon (PA), GF-PA, CF-PA, PC, PVA, soluble support
+
+### 3.3 (continued) IDEX Modes — Twin Dragon
+
+The key advantage of the Twin Dragon is IDEX — both heads move completely independently on separate X carriages.
 
 | Mode | Description | Use Case |
 |------|-------------|---------|
@@ -282,7 +308,7 @@ Used on machines without auto-leveling or as a prerequisite before auto-leveling
 
 1. Preheat bed to print temperature (PLA → 60°C, PETG → 70°C, ABS → 100°C).
 2. Preheat nozzle to 150°C (soft enough to ooze but won't burn you instantly).
-3. In OctoPrint/Mainsail: send `G28` (home all axes).
+3. In OctoPrint Terminal: send `G28` (home all axes).
 4. Send `G0 Z0.2` to bring nozzle close to bed — **never send `G0 Z0` directly**, the nozzle may crash into the surface before homing is applied.
 5. Move nozzle to front-left corner (`G0 X30 Y30`).
 6. Slide paper under nozzle. Adjust corner knob until paper has slight resistance but can still slide.
@@ -311,8 +337,8 @@ BLTouch → Board
 [bltouch]
 sensor_pin: ^PC6       # ^ = pull-up enabled
 control_pin: PA8
-x_offset: -38.0        # Julia-specific measured value. Measure on YOUR machine: nozzle X minus probe X
-y_offset: +3.0         # Julia-specific. Positive = probe is behind nozzle
+x_offset: -38.0        # Machine-specific measured value. Measure on YOUR machine: nozzle X minus probe X
+y_offset: +3.0         # Machine-specific. Positive = probe is behind nozzle
 z_offset: 1.45         # Starting value only — fine-tune with PROBE_CALIBRATE macro
 
 [bed_mesh]
@@ -324,12 +350,12 @@ probe_count: 5, 5      # 5×5 = 25 probe points
 algorithm: bicubic
 ```
 
-> 📌 **Critical:** The `x_offset` and `y_offset` values above are Julia-specific measured values. On any other machine, measure the physical distance between nozzle tip and probe pin with calipers and enter your own values. Do not copy these numbers to Snowflake or Dragon.
+> 📌 **Critical:** The `x_offset` and `y_offset` values shown are example values only. On every machine, measure the physical distance between nozzle tip and probe pin with calipers and enter your own values. Do not copy example numbers to a different machine.
 
 **Running a bed mesh:**
 
 ```
-# In Mainsail or Fluidd console:
+# In OctoPrint Terminal tab:
 G28              # Home all axes
 BED_MESH_CALIBRATE  # Probe all mesh points (takes 3–5 minutes)
 SAVE_CONFIG      # Writes mesh to printer.cfg
@@ -411,7 +437,7 @@ The first layer determines whether a print will succeed or fail. Learn to read i
 
 ## 8. Wiring a Hotend Assembly
 
-This procedure covers wiring a replacement hotend from scratch on Julia or Snowflake.
+This procedure covers wiring a replacement hotend from scratch on Snowflake or Dragon.
 
 ### 8.1 Components to Wire
 
@@ -460,28 +486,28 @@ This procedure covers wiring a replacement hotend from scratch on Julia or Snowf
 ## 9. Hands-On Exercises
 
 ### Exercise 4.1 — Machine Identification
-- [ ] Photograph each machine (Snowflake, Julia, Dragon, Twin Dragon) and label at least 10 components per machine
+- [ ] Photograph each machine (Snowflake, Dragon, Twin Dragon) and label at least 10 components per machine
 - [ ] Record the current firmware version displayed on each machine's screen
 
 ### Exercise 4.2 — Hotend Electrical Testing
-- [ ] Using a multimeter, measure heater cartridge resistance on Julia — record value and confirm it is within spec
+- [ ] Using a multimeter, measure heater cartridge resistance on Snowflake — record value and confirm it is within spec
 - [ ] Measure thermistor resistance at room temperature on Dragon — confirm ~100kΩ
 - [ ] Test fan continuity on Snowflake
 
 ### Exercise 4.3 — Manual Bed Tramming
-- [ ] Perform a full manual tram on Julia from scratch (all 4 corners + center verify)
+- [ ] Perform a full bed level calibration on Snowflake from scratch (run G29 auto bed leveling + Z-offset verify)
 - [ ] Record the before and after Z-height variation across corners
 
-### Exercise 4.4 — BLTouch Bed Mesh
-- [ ] Run `BED_MESH_CALIBRATE` on Snowflake
-- [ ] Export the mesh visualization from Mainsail
-- [ ] Identify the highest and lowest points in the mesh
+### Exercise 4.4 — Auto Bed Leveling Mesh
+- [ ] Run `G29` on Snowflake (Marlin) — verify mesh completes without errors
+- [ ] Run `BED_MESH_CALIBRATE` on Dragon (Klipper) — export mesh visualization from OctoPrint
+- [ ] Identify the highest and lowest points in the mesh on Dragon
 
 ### Exercise 4.5 — E-Steps / Rotation Distance Verification
-- [ ] Mark filament 120 mm above extruder on Julia
+- [ ] Mark filament 120 mm above extruder on Snowflake
 - [ ] Command 100 mm extrude
 - [ ] Measure actual extrusion
-- [ ] Calculate corrected rotation_distance and update printer.cfg
+- [ ] Calculate corrected value and update: `M92 E<steps>` then `M500` (Marlin/Snowflake) or `rotation_distance` in `printer.cfg` (Klipper/Dragon, Twin Dragon)
 
 ---
 
@@ -502,7 +528,9 @@ This procedure covers wiring a replacement hotend from scratch on Julia or Snowf
 - [Klipper Documentation — Bed Leveling](https://www.klipper3d.org/Bed_Level.html) — Official Klipper bed mesh and probe configuration
 - [Klipper Documentation — BLTouch](https://www.klipper3d.org/BLTouch.html) — Full BLTouch wiring and config reference
 - [Teaching Tech 3D Printer Calibration Guide](https://teachingtechyt.github.io/calibration.html) — Systematic calibration from E-steps to temperature towers
-- [MKS Monster8 Documentation](https://github.com/makerbase-mks/MKS-Monster8) — Board schematic and pinout reference for Snowflake and Twin Dragon
+- [Fracktal Works Dragon User Guide](https://www.fracktal.in) — Official Dragon documentation
+- [Fracktal Works Twin Dragon Manual](https://www.fracktal.in) — Official Twin Dragon documentation
+- [Fracktal Works Snowflake User Guide](https://www.fracktal.in) — Official Snowflake documentation
 
 ---
 
@@ -512,7 +540,7 @@ This procedure covers wiring a replacement hotend from scratch on Julia or Snowf
 2. Twin Dragon's IDEX system has a mode called "Duplication Mode." What does this mode do, and when would you use it?
 3. You measure a heater cartridge and get `OL` on your multimeter. What does this mean, and what do you do?
 4. The BLTouch probe's X-offset is set to -38 mm. Explain what this value means physically.
-5. A print on Julia shows the first layer squished completely flat with no visible bead texture. What is the likely cause and what do you adjust?
+5. A print on Snowflake shows the first layer squished completely flat with no visible bead texture. What is the likely cause and what do you adjust?
 6. After replacing the extruder on Snowflake, you measure 94 mm of actual extrusion when 100 mm was commanded, and the current rotation_distance is 7.71. Calculate the corrected rotation_distance.
 7. What is the difference between bed tramming and bed meshing? When do you need both?
 

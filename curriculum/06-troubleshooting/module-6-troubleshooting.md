@@ -25,7 +25,7 @@ After completing this module, you will be able to:
 | Tool | Purpose |
 |------|---------|
 | Digital multimeter | Continuity, resistance, and voltage testing for electrical faults |
-| SSH client / Mainsail console | Klipper diagnostic commands and log access |
+| SSH client / OctoPrint Terminal | Klipper diagnostic commands and log access |
 | VS Code with Remote SSH | Reviewing and editing `printer.cfg` |
 | Hex key set (1.5–5 mm) | Mechanical inspection and adjustment |
 | Digital calipers | Measuring extrusion output, dimensional accuracy |
@@ -120,7 +120,7 @@ This builds a team knowledge base that prevents repeated failures.
 
 **Fix:** Raise Z-offset by 0.05 mm at a time until a slight bead texture is visible on the first layer.
 
-**Emergency Stop:** If you see the nozzle dragging, immediately press EMERGENCY STOP in Mainsail/OctoPrint. Forcing the nozzle into the bed can damage the PEI sheet and in severe cases bend the probe or nozzle.
+**Emergency Stop:** If you see the nozzle dragging, immediately press EMERGENCY STOP in OctoPrint. Forcing the nozzle into the bed can damage the PEI sheet and in severe cases bend the probe or nozzle.
 
 #### 2.1.3 Uneven First Layer (One Corner Peeling)
 
@@ -385,7 +385,7 @@ QUERY_ENDSTOPS
 
 ### 2.9 Raspberry Pi / OctoPrint / Klipper Connectivity Issues
 
-**Symptoms:** OctoPrint or Mainsail shows "Offline," can't connect to printer, or Klipper shows "MCU (Microcontroller Unit) Connection Failure."
+**Symptoms:** OctoPrint shows "Offline," can't connect to printer, or Klipper shows "MCU (Microcontroller Unit) Connection Failure."
 
 **Step 1 — SSH to the Raspberry Pi and check Klipper status:**
 ```bash
@@ -503,7 +503,7 @@ IDEX Head Collision
 **Reported by operator:** "Snowflake shows an error after homing, can't start the print."
 
 **Investigation:**
-1. Connect to Mainsail — error message reads: `Error: BLTouch failed to deploy`
+1. Connect to OctoPrint — error message reads: `Error: BLTouch failed to deploy`
 2. Send `BLTOUCH_DEBUG COMMAND=pin_down` — probe doesn't deploy
 3. Send `BLTOUCH_DEBUG COMMAND=reset` — still no movement
 4. Power off, inspect BLTouch physically — probe pin is stuck in up position

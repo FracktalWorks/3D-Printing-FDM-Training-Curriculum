@@ -63,7 +63,7 @@
 
 | # | Title | Channel | Duration | Why Watch |
 |---|-------|---------|---------|-----------|
-| 16 | [CoreXY Motion System Explained](https://www.youtube.com/watch?v=SbonF7cBOKU) | Teaching Tech | 15 min | Clear animation of CoreXY belt math — essential for Snowflake/Julia/Dragon |
+| 16 | [CoreXY Motion System Explained](https://www.youtube.com/watch?v=SbonF7cBOKU) | Teaching Tech | 15 min | Clear animation of CoreXY belt math — essential for Snowflake/Dragon/Twin Dragon |
 | 17 | [Belt Tension — Why It Matters](https://www.youtube.com/watch?v=8a4dSS5BVQY) | Thomas Sanladerer | 12 min | Shows measured impact of incorrect belt tension on print quality |
 | 18 | [MGN12 Linear Rail Installation Guide](https://www.youtube.com/watch?v=9pI3IrGjrxU) | Nero 3D | 20 min | Precise rail installation, alignment, and lubrication |
 | 19 | [Lead Screw vs Ball Screw — Which to Use?](https://www.youtube.com/watch?v=N2Y6zyakFNQ) | Maker's Muse | 10 min | **(Intermediate)** — Comparison of Z-drive options with real print comparisons |
@@ -118,7 +118,7 @@
 
 | # | Title | Channel | Duration | Why Watch |
 |---|-------|---------|---------|-----------|
-| 33 | [Manual Bed Leveling — The Right Way](https://www.youtube.com/watch?v=_EfWVUJjBdA) | Teaching Tech | 20 min | Paper method with live adjustments — exactly what we use on Julia |
+| 33 | [Manual Bed Leveling — The Right Way](https://www.youtube.com/watch?v=_EfWVUJjBdA) | Teaching Tech | 20 min | Paper method with live adjustments — exactly what we use on Snowflake |
 | 34 | [BLTouch Installation and Z-Offset Calibration](https://www.youtube.com/watch?v=eF060dBEnfs) | Teaching Tech | 27 min | Complete BLTouch guide from wiring to Z-offset procedure |
 | 35 | [Bed Mesh Leveling Explained](https://www.youtube.com/watch?v=vcxM5MXZXNE) | Teaching Tech | 18 min | Visualizing and interpreting bed mesh data |
 | 36 | [E-Steps Calibration — The Right Way](https://www.youtube.com/watch?v=X3A9Ir4P7gU) | Teaching Tech | 15 min | Mark, extrude, measure, calculate — step by step |
@@ -138,17 +138,17 @@
 
 | # | Title | Channel | Duration | Why Watch |
 |---|-------|---------|---------|-----------|
-| 39 | [OrcaSlicer Complete Beginner Guide](https://www.youtube.com/watch?v=RYRPvb5BI2o) | Softfever | 35 min | Full OrcaSlicer walkthrough — the slicer we use for Klipper machines |
-| 40 | [PrusaSlicer — Complete Guide](https://www.youtube.com/watch?v=bnMpOHuSmTo) | Teaching Tech | 40 min | PrusaSlicer from import to export — all key settings |
+| 39 | [Fracktory Slicer Setup Guide](https://www.youtube.com/results?search_query=fracktory+slicer+fracktal+works) | Fracktal Works | varies | Fracktory slicer setup and profile selection for Fracktal machines |
+| 40 | [Cura 3D Slicer for Beginners](https://www.youtube.com/watch?v=9Ja9utWCKWA) | Teaching Tech | 40 min | In-depth Cura tutorial — Fracktory is Cura-based, all settings apply |
 | 41 | [Infill Patterns Compared — Which to Use?](https://www.youtube.com/watch?v=upELI0HmzHc) | CNC Kitchen | 22 min | Mechanical testing of all infill patterns — data-driven selection guide |
 | 42 | [Support Structures — When and How to Use](https://www.youtube.com/watch?v=IeUDWELCPGc) | Maker's Muse | 16 min | Support types, settings, and DfAM to avoid needing supports |
 
-### OctoPrint and Klipper
+### Fracktory and Klipper
 
 | # | Title | Channel | Duration | Why Watch |
-|---|-------|---------|---------|-----------|
-| 43 | [OctoPrint Setup and Configuration](https://www.youtube.com/watch?v=HBd0olxI-No) | Teaching Tech | 32 min | Complete OctoPrint setup on Raspberry Pi with essential plugins |
-| 44 | [Klipper Setup from Scratch](https://www.youtube.com/watch?v=8vkM2Yoy7-M) | Teaching Tech | 45 min | Full Klipper install on Raspberry Pi + MKS board |
+|---|-------|---------|---------|----------|
+| 43 | [OctoPrint Overview and Features](https://www.youtube.com/watch?v=RtYPbh3SPOE) | Teaching Tech | 20 min | OctoPrint web UI walkthrough — terminal, file manager, webcam, temperature graphs |
+| 44 | [Klipper Setup from Scratch](https://www.youtube.com/watch?v=8vkM2Yoy7-M) | Teaching Tech | 45 min | Full Klipper install on Raspberry Pi + Manta M8P board |
 | 45 | [Klipper Macros — Writing Your Own](https://www.youtube.com/watch?v=FC3vMCKFY6s) | Made with Layers | 20 min | START_PRINT, END_PRINT, and custom macros explained |
 | 46 | [Pressure Advance Calibration in Klipper](https://www.youtube.com/watch?v=MkpCuFVq6aE) | Teaching Tech | 18 min | Calibration method for pressure advance with visual results |
 | 47 | [Klipper Input Shaper — ADXL345 Setup](https://www.youtube.com/watch?v=OoWQUcFimX8) | Nero 3D | 25 min | **(Intermediate)** — Input Shaper / resonance compensation for Snowflake |
@@ -230,7 +230,7 @@ Subscribe to these channels for ongoing learning:
 | Marlin Documentation | Official Docs | https://marlinfw.org/docs/ | Marlin firmware configuration reference |
 | RepRap Wiki | Community Wiki | https://reprap.org/wiki/ | History, hardware specs, community knowledge |
 | Cirkit Designer | Tool | https://app.cirkitdesigner.com/ | Wiring schematic creation |
-| OrcaSlicer Wiki | Tool Docs | https://github.com/SoftFever/OrcaSlicer/wiki | Complete OrcaSlicer reference |
+| OrcaSlicer Wiki | Community reference | https://github.com/SoftFever/OrcaSlicer/wiki | Background reading — Fracktal uses Cura base, but concepts overlap |
 
 ---
 

@@ -10,30 +10,31 @@
 
 | Item | Value |
 |------|-------|
-| **Motion System** | CoreXY, insulated enclosure |
-| **Build Volume** | 350 × 350 × 400 mm |
-| **Control Board** | MKS Eagle (STM32H743) |
-| **Firmware** | Klipper + Mainsail |
-| **Stepper Drivers** | TMC2209 (UART, sensorless-homing capable) |
-| **Extruder** | Bowden drive |
-| **Nozzle** | E3D Volcano 0.6 mm (larger flow than standard) |
-| **Max Hotend Temp** | 320°C (high-temp capable) |
-| **Max Bed Temp** | 120°C |
-| **Bed Surface** | Cast aluminum + PEI sheet |
-| **Auto-leveling** | BLTouch (primary) + mechanical endstop (backup) |
-| **Enclosure** | Insulated cover, active exhaust fan |
-| **Host** | Raspberry Pi 4 (Mainsail) |
+| **Motion System** | CoreXY |
+| **Build Volume** | 400 × 300 × 400 mm (Dragon 400) |
+| **Control Board** | BIGTREETECH Manta M8P V2.0 + RP2040 toolboard (CAN bus) |
+| **Firmware** | Klipper + OctoPrint |
+| **Stepper Drivers** | TMC5160 (onboard) |
+| **Extruder** | Direct drive |
+| **Nozzle** | 0.4 mm (standard), 0.6 mm / 0.8 mm LT/HT/HH available |
+| **Max Hotend Temp** | 300°C |
+| **Max Bed Temp** | 110°C |
+| **Bed Surface** | PEI flexible build plate |
+| **Auto-leveling** | Yes |
+| **Display** | 5-inch Touchscreen |
+| **Host** | Raspberry Pi CM4 (OctoPrint) |
+| **Connectivity** | USB, Wi-Fi, Ethernet |
 | **Network** | `http://192.168.1.103` (or `http://dragon`) |
 
 ---
 
 ## ⚠️ Dragon-Specific Safety Rules
 
-1. **Pre-heat enclosure before printing** — always heat enclosure to 50°C before starting any print.
-2. **Allow 120 seconds** for nozzle to reach 320°C (don't rush — thermal shock risks nozzle microcracking).
-3. **DO NOT open the enclosure door mid-print** during ABS/ASA runs — rapid thermal drop causes warping.
-4. **Active exhaust fan must be running** before heating above 200°C.
-5. **BLTouch probe can false-trigger** from hot-air currents inside enclosure — re-probe only when enclosure is at stable temp.
+1. **Use correct nozzle for material** — LT for PLA/PETG, HT for ABS/HIPS, HH for CF/GF filaments.
+2. **Allow 60 seconds** for nozzle to stabilize at target temperature before starting a print.
+3. **Filament runout sensor active** — machine will pause automatically when filament runs out.
+4. **CAN bus toolboard** — do not disconnect the CAN connector from the toolboard while the machine is powered.
+5. **Wi-Fi printing** — Dragon prints are sent via Fracktory (Wi-Fi) or by placing `.gcode` on USB.
 
 ---
 
@@ -70,7 +71,7 @@ M112                         → EMERGENCY STOP
 □ Bowden tube inspected — no kinks, no cracks near hot end
 □ Filament: bone-dry (ABS/ASA max 1hr exposed; Nylon max 30min)
 □ Print job logged in Fracktory as HIGH-TEMP run
-□ Webcam + Mainsail alerts set for remote monitoring
+□ Webcam + OctoPrint alerts set for remote monitoring
 ```
 
 ---
@@ -90,7 +91,15 @@ M112                         → EMERGENCY STOP
 
 ---
 
-## BLTouch Probe Offsets
+## Auto-Leveling (Load Cell / BED_MESH_CALIBRATE)
+
+Dragon uses built-in auto-leveling. Run before any new material or after bed changes:
+
+```gcode
+G28            ; home all axes
+BED_MESH_CALIBRATE    ; run mesh probing
+SAVE_CONFIG    ; save to printer.cfg
+```
 
 ```
 X offset: -35.0 mm    (probe is 35 mm LEFT of nozzle)
@@ -124,7 +133,7 @@ Z offset:  1.55 mm    (verify at enclosure operating temperature)
 | 1 | Layer shift at 1+ hour into print | Thermal expansion changes Z mesh | Re-run `BED_MESH_CALIBRATE` at full operating temp; add mid-print re-probe macro |
 | 2 | Bowden plug / backflow at nozzle | Retraction too large for Volcano | Reduce retraction to ≤ 2 mm; increase retraction speed to 45 mm/s |
 | 3 | Volcano nozzle partial clog | Carbon deposits from high-temp | Soak in 99% IPA for 2 hours; if still clogged — replace nozzle |
-| 4 | BLTouch false-triggers inside enclosure | Hot air currents deflecting probe | Clean lens; increase Z-clearance; use mechanical endstop backup |
+| 4 | Auto-leveling probe intermittent | CAN toolboard cable loose or bad connection | Check CAN connector on toolboard, re-seat if needed |
 | 5 | Stepper skip at 320°C print speed | Bowden drag increases at high temp | Reduce speed by 15%; increase `run_current` to 0.9 A |
 
 ---
@@ -150,14 +159,16 @@ tail -f ~/printer_data/logs/klippy.log
 
 ## Dragon vs. Other Machines
 
-| Feature | Dragon | Snowflake | Julia |
-|---------|--------|-----------|-------|
-| Max temp | **320°C** | 300°C | 280°C |
-| Nozzle | **0.6 mm Volcano** | 0.4 mm E3D V6 | 0.4 mm brass |
-| Build volume | **350×350×400** | 300³ | 250³ |
-| Enclosure | **Yes (insulated)** | No | No |
-| Drive type | **Bowden** | Direct | Direct |
-| Board | MKS Eagle | MKS Monster8 | MKS Robin Nano V3 |
+| Feature | Dragon | Snowflake | Twin Dragon |
+|---------|-----------|-------------|---------------|
+| Max temp | **300°C** | 265°C | 300°C |
+| Nozzle (std) | **0.4 mm** | 0.4 mm | 0.4 mm |
+| Build volume | **400×300×400 mm** | 200×200×200 mm | 300×300×400 mm (TD 300) |
+| Enclosure | No (open frame) | No | No |
+| Drive type | **Direct drive** | Dual-Gear Direct | BGM Direct Drive (IDEX) |
+| Firmware | **Klipper** | Marlin | Klipper |
+| Board | Manta M8P V2.0 | Manta M8P V2.0 | Manta M8P V2.0 |
+| Max Speed | **600 mm/s** (Dragon 400) | 150 mm/s | 500 mm/s |
 
 ---
 

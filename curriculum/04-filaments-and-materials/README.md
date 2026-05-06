@@ -262,7 +262,7 @@ Does it need maximum strength/toughness?
 ## 📚 Further Reading & Forums
 
 - [Makers101 — 3D Printing Filament Guide 2025: PLA, TPU, PETG, ABS, ASA](https://makers101.com/3d-printing-filament-guide/) — Up-to-date comprehensive filament comparison with print settings
-- [Bambu Lab — 3D Printer Filament Comparison Guide](https://bambulab.com/en-us/filament/guide) — Official comparison from a leading modern printer manufacturer
+- [eSUN Filament Technical Data Sheets](https://www.esun3d.com/products.html) — Official eSUN material specs including temperature, drying, and compatibility data
 - [Simplify3D — Ultimate Material Properties Table](https://www.simplify3d.com/resources/materials-guide/properties-table/) — Side-by-side material specs table (temperatures, strength, flexibility)
 - [Ultimaker — PETG vs PLA vs ABS: 3D Printing Strength Comparison](https://ultimaker.com/learn/petg-vs-pla-vs-abs-3d-printing-strength-comparison/) — Technical comparison from a professional printer brand
 - [MatterHackers — 3D Printer Filament Comparison Guide](https://www.matterhackers.com/3d-printer-filament-compare) — Interactive comparison tool with community ratings

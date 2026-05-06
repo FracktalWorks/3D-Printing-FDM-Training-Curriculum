@@ -224,7 +224,7 @@ Bad:   ██ ███  ████  (gaps in lines)
 
 **Fixes**: 
 - Fix the root cause (Z-offset, bed surface, temperature)
-- Enable failure detection (Bambu Lab, Obico) — AI cameras that detect spaghetti and pause
+- Enable failure detection via OctoPrint cameras — monitor prints remotely and pause if issues arise
 
 ---
 
@@ -282,7 +282,7 @@ Before corner:  ~~~CORNER~~~  (wavy ripples from vibration)
 - [Simplify3D — Print Quality Troubleshooting Guide](https://www.simplify3d.com/resources/print-quality-troubleshooting/) — Industry-standard visual reference for diagnosing print defects
 - [Ellis' Print Tuning Guide](https://ellis3dp.com/Print-Tuning-Guide/) — Community's most complete calibration and troubleshooting resource
 - [r/FixMyPrint — Free 3D Printing Troubleshooting Guides (Forum)](https://www.reddit.com/r/FixMyPrint/comments/1sx6xty/free_3d_printing_troubleshooting_guides_stringing/) — Community-curated troubleshooting guides for stringing, warping, wet filament
-- [Prusa Forum — Assembly & First Prints Troubleshooting](https://forum.prusa3d.com/forum/original-prusa-assembly-and-first-prints-troubleshooting/) — Official Prusa community forum for troubleshooting
+- [Fracktal Works Support Portal](https://care.fracktal.in) — Official Fracktal support for Dragon, Twin Dragon, and Snowflake machines
 - [Sovol3D — Fixing 3D Printer Layer Shifting](https://www.sovol3d.com/blogs/news/fix-3d-print-layers-shifting-common-issues-and-solutions) — Focused guide on layer shift causes and solutions
 
 ---

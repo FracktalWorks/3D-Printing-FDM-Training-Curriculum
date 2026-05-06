@@ -5,7 +5,7 @@
 ## 🎯 Learning Objectives
 
 After completing this module, you will be able to:
-- Explain what a slicer does and slice a model using Cura or PrusaSlicer
+- Explain what a slicer does and slice a model using Fracktory
 - Define and adjust the most critical slicer parameters
 - Understand the role of firmware (Marlin vs Klipper)
 - Read and interpret basic G-code commands
@@ -44,32 +44,17 @@ A **slicer** takes a 3D model and slices it into horizontal layers, generating t
 - Plugin marketplace for extensions
 - Download: [ultimaker.com/software/ultimaker-cura](https://ultimaker.com/software/ultimaker-cura/)
 
-### 2.2 PrusaSlicer (by Prusa Research)
+### 2.2 Fracktory (by Fracktal Works) — **Primary Slicer**
 
-**Free and open-source.** Forked from Slic3r; arguably the most feature-rich slicer.
+**Free.** Built on the Ultimaker Cura open-source base. This is the official slicer for all Fracktal Works machines.
 
-- Excellent support generation (organic/paintable supports)
-- Variable layer height
-- Per-object and per-region settings
-- Download: [github.com/prusa3d/PrusaSlicer](https://github.com/prusa3d/PrusaSlicer)
-
-### 2.3 Bambu Studio (by Bambu Lab)
-
-**Free.** Based on PrusaSlicer; required for Bambu printers; excellent quality.
-
-- Multi-material support (AMS)
-- AI-assisted print settings
-- Download: [bambulab.com/en/software/bambu-studio](https://bambulab.com/en/software/bambu-studio.html)
-
-### 2.4 OrcaSlicer
-
-**Free and open-source.** Community fork of Bambu Studio with additional features and broader printer support.
-
-- Download: [github.com/SoftFever/OrcaSlicer](https://github.com/SoftFever/OrcaSlicer)
-
-### 2.5 Simplify3D (paid)
-
-A paid slicer known for its scripting/process system. Less recommended now; free alternatives have caught up.
+- Pre-configured machine profiles for Snowflake, Dragon, and Twin Dragon
+- Wi-Fi printing directly from slicer to printer
+- Cura-based plugin ecosystem
+- Nozzle size selection: 0.25 mm, 0.4 mm, 0.6 mm, 0.8 mm
+- Windows (Vista+, 64-bit), macOS (10.11+), Linux (Ubuntu 14.04+)
+- **Download**: [printers.fracktory.in/download](http://printers.fracktory.in/download)
+- **Support**: support@fracktal.in / https://care.fracktal.in
 
 ---
 
@@ -160,7 +145,7 @@ Supports are temporary structures printed beneath overhangs ≥45–60°.
 |-------------|---------|
 | **Normal/linear** | Simple overhangs |
 | **Tree supports** | Complex geometry, touching supports |
-| **Organic supports** (PrusaSlicer) | Minimal contact, easiest removal |
+| **Organic supports** (Cura/Fracktory) | Minimal contact, easiest removal |
 | **Paintable supports** | Manually select exactly where supports go |
 
 ### 3.8 First Layer Settings
@@ -255,7 +240,7 @@ G92 E0       ; Reset extruder after purge
 ### Repair Tools
 
 Sometimes STL files from the internet have errors (non-manifold geometry, holes). Repair tools:
-- **PrusaSlicer**: Built-in repair (powered by Netfabb)
+- **Fracktory/Cura**: Built-in repair (powered by Netfabb)
 - **Meshmixer**: Free, powerful mesh repair and hollowing
 - **Netfabb** (online): [netfabb.autodesk.com](https://netfabb.autodesk.com)
 
@@ -267,19 +252,14 @@ Sometimes STL files from the internet have errors (non-manifold geometry, holes)
 |-------|---------|-----------|
 | [Model File to 3D Print — Beginner's Guide to Using Cura](https://www.youtube.com/watch?v=e-lQPGJ3Psc) | YouTube | Full workflow from STL file to print-ready G-code in Cura |
 | [Cura 3D Slicer for Beginners — In-Depth Tutorial](https://www.youtube.com/watch?v=9Ja9utWCKWA) | YouTube | Every important Cura setting explained step-by-step |
-| [PrusaSlicer for Beginners — Ender 3](https://www.youtube.com/watch?v=WIjpb-bSwGc) | YouTube | PrusaSlicer setup and profile configuration for a beginner machine |
-| [Prusa Slicer 2.0 — Import, Slice and Print](https://www.youtube.com/watch?v=Ttg2wEjD784) | YouTube | Quick practical walkthrough of the full PrusaSlicer workflow |
-| [Use PrusaSlicer 2.3 with ANY 3D Printer](https://www.youtube.com/watch?v=Wz2Soog4HkQ) | YouTube | How to configure PrusaSlicer profiles for non-Prusa machines |
+| [Fracktory Slicer Quick Setup](https://www.youtube.com/results?search_query=fracktory+slicer+fracktal+works) | YouTube | Fracktory slicer setup and profile workflow for Fracktal machines |
 
 ---
 
 ## 📚 Further Reading & Forums
 
-- [Prusa Knowledge Base — First Print with PrusaSlicer](https://help.prusa3d.com/article/first-print-with-prusaslicer_1753) — Official step-by-step guide from Prusa
-- [Klipper Configuration Reference](https://www.klipper3d.org/Config_Reference.html) — All Klipper config options explained in detail
-- [Marlin Configuration Guide](https://marlinfw.org/docs/configuration/configuration.html) — Official Marlin firmware configuration reference
-- [RepRap G-code Reference](https://reprap.org/wiki/G-code) — Complete G-code command list with descriptions
-- [r/ender3 — PrusaSlicer G-code compatibility (Forum)](https://www.reddit.com/r/ender3/comments/12h1g4v/prusaslicer_gcode_from_cura/) — Community discussion on slicer G-code differences
+- [Fracktory Download & Documentation](http://printers.fracktory.in/download) — Official Fracktory slicer download and setup guide
+- [Fracktal Works Support](https://care.fracktal.in) — Official support portal and knowledge base
 
 ---
 

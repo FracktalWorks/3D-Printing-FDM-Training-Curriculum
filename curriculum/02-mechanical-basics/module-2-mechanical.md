@@ -119,7 +119,7 @@ Heat-set brass inserts provide strong, reusable threads in 3D-printed parts.
 
 ## 3. Aluminum Extrusion Frame
 
-Most modern FDM printers (including Dragon, Julia, Snowflake, Twin Dragon) use **2020 or 2040 aluminum extrusion** for their structural frame.
+Most modern FDM printers (including Dragon, Snowflake, Twin Dragon) use **2020 or 2040 aluminum extrusion** for their structural frame.
 
 ### 3.1 Extrusion Profile Naming
 
@@ -167,7 +167,7 @@ Used in simpler/legacy builds.
 
 ### 4.2 MGN Linear Rails (HIWIN Miniature Linear Rail System)
 
-Used on Dragon, Julia, Snowflake, Twin Dragon — higher precision than rods.
+Used on Dragon, Snowflake, Twin Dragon — higher precision than rods.
 
 | Spec | Details |
 |------|---------|
@@ -226,7 +226,7 @@ The X and Y axes use **GT2 timing belts** (2 mm pitch) and **GT2 pulleys**.
 **Belt Path Alignment:**
 Belts must run parallel to the motion axis. A twisted belt will rub on pulley flanges and wear prematurely. Use an adjustable belt tension block to align.
 
-> ⚠️ **CoreXY-specific requirement:** On CoreXY machines (Snowflake, Julia, Dragon, Twin Dragon), **both belts must be tensioned equally**. Unequal belt tension causes the X-axis to skew — the printhead tracks at a slight diagonal instead of straight, producing rhombus-shaped parts instead of squares. After tensioning, print a 100×100 mm square and measure both diagonals: they must be equal within 0.5 mm. If not, slightly increase tension on the slack belt.
+> ⚠️ **CoreXY-specific requirement:** On CoreXY machines (Snowflake, Dragon, Twin Dragon), **both belts must be tensioned equally**. Unequal belt tension causes the X-axis to skew — the printhead tracks at a slight diagonal instead of straight, producing rhombus-shaped parts instead of squares. After tensioning, print a 100×100 mm square and measure both diagonals: they must be equal within 0.5 mm. If not, slightly increase tension on the slack belt.
 
 ---
 
@@ -244,7 +244,7 @@ Our machines use different kinematic systems:
 ### 5.2 CoreXY
 
 - **Description:** Two motors at opposite sides of the gantry control X and Y simultaneously via crossed belts.
-- **Examples:** Snowflake, Julia, Dragon, Twin Dragon
+- **Examples:** Snowflake, Dragon, Twin Dragon
 - **Advantage:** Lighter moving mass → higher speed, better quality at speed.
 - **Disadvantage:** Belt routing is complex; both belts must be equal tension for accurate motion.
 
@@ -316,7 +316,9 @@ Filament →  [Extruder / Drive Gear]
 
 **Our Machines:**
 - Snowflake: Direct Drive
-- Julia: Direct Drive
+- Snowflake: Dual-Gear Drive (direct)
+- Dragon: Direct Drive
+- Twin Dragon: BGM Direct Drive (IDEX)
 - Dragon: Bowden + optional Direct Drive upgrade
 - Twin Dragon: Dual Direct Drive (IDEX configuration)
 
@@ -379,7 +381,7 @@ Filament →  [Extruder / Drive Gear]
 - [ ] Adjust the tensioner until spec is achieved; re-measure
 
 ### Exercise 2.3 — MGN Rail Inspection
-- [ ] Run a carriage along the full travel of a Julia Y-axis rail
+- [ ] Run a carriage along the full travel of a Snowflake Y-axis rail
 - [ ] Document any catching, roughness, or lateral play
 - [ ] Apply Super Lube grease and repeat
 

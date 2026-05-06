@@ -3,7 +3,7 @@
 > A structured, open-source training curriculum for freshers learning 3D printing.
 > Covers electronics, mechanical, software, and printer operations — from zero to confident operator.
 > Machines covered: **Snowflake**, **Julia**, **Dragon**, **Twin Dragon**.
-> Tools: Cirkit Designer, OctoPrint, Klipper, Fracktory, MKS boards.
+> Tools: Cirkit Designer, OctoPrint, Klipper, Fracktory.
 
 ## How to Use
 
@@ -23,7 +23,7 @@
 | [Module 2 — Mechanical](module-2-mechanical.md) | Tools, fasteners, motion systems, hotend assembly | Mechanical | 4h |
 | [Module 3 — Software](module-3-software.md) | Git, GitHub, VS Code, SSH, Linux, Cirkit Designer | Software | 4h |
 | [Module 4 — Printer Basics](module-4-printer-basics.md) | FDM process, Snowflake/Julia/Dragon/Twin Dragon, bed leveling, E-steps | Printer Skills | 5h |
-| [Module 5 — Operations](module-5-operations.md) | Slicing, OctoPrint, Klipper, Fracktory, drybox | Operations | 5h |
+| [Module 5 — Operations](module-5-operations.md) | Slicing, Wi-Fi printing, Klipper, Fracktory, drybox | Operations | 5h |
 | [Module 6 — Troubleshooting](module-6-troubleshooting.md) | Diagnostics, fault finding, machine-specific fixes | All | 4h |
 
 **Total estimated self-study time: ~27 hours**
@@ -44,7 +44,7 @@
 
 | Machine | Quick Ref Card |
 |---------|---------------|
-| Snowflake (CoreXY, 300³, MKS Monster8) | [SNOWFLAKE-QUICK-REF.md](machines/SNOWFLAKE-QUICK-REF.md) |
+| Snowflake (CoreXY, 200³, Manta M8P V2.0) | [SNOWFLAKE-QUICK-REF.md](machines/SNOWFLAKE-QUICK-REF.md) |
 | Julia (CoreXY, 250³, MKS Robin Nano V3) | [JULIA-QUICK-REF.md](machines/JULIA-QUICK-REF.md) |
 | Dragon (CoreXY, 350×350×400, enclosed, high-temp) | [DRAGON-QUICK-REF.md](machines/DRAGON-QUICK-REF.md) |
 | Twin Dragon (CoreXY + IDEX, 300×300×350, dual-head) | [TWIN-DRAGON-QUICK-REF.md](machines/TWIN-DRAGON-QUICK-REF.md) |
