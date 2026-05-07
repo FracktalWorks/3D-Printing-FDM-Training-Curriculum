@@ -187,7 +187,7 @@ Connectors allow wires to be disconnected for maintenance without cutting. Knowi
 | **JST-PH** | 2.0 mm | 2A | Smaller sensors, LCD cables |
 | **Dupont** | 2.54 mm | 1A | Prototype connections, jumpers |
 | **Molex Mini-Fit Jr** | 4.2 mm | 13A | Stepper motor wiring |
-| **XT30** | — | 30A | Medium power, bed heaters |
+| **XT30** | — | 30A | Medium power connections |
 | **XT60** | — | 60A | High-current battery/PSU connections |
 | **Wire-to-board screw terminal** | 3.5–5.08 mm | 10–25A | PSU input/output |
 
@@ -207,7 +207,7 @@ JST-XH connectors are used throughout 3D printers for low-current signals. Corre
 
 ### 4.3 XT60 / XT30 Connectors (High Current)
 
-XT60 connectors are rated for 60A continuous and are used for PSU output rails and heated bed connections on high-power builds.
+XT60 connectors are rated for 60A continuous and are used for PSU output rails and high-current connections.
 
 1. **Tin both the XT60 cup and the wire** before joining.
 2. Use a **high-wattage iron (60–80W)** — XT60 cups are large and dissipate heat quickly.
@@ -247,7 +247,7 @@ Fracktal machines use two different control boards:
 | **Stepper Drivers** | 5× onboard TMC2209 |
 | **Firmware** | Marlin |
 | **Interface** | USB serial (250000 baud) / SD card |
-| **Heater outputs** | HE0 (hotend), HB (bed) |
+| **Heater outputs** | HE0 (hotend), HB (SSR trigger signal for bed) |
 | **Thermistor inputs** | TH0, TB |
 
 ### 5.3 Manta M8P V2.0 — Dragon / Twin Dragon Specs
@@ -375,6 +375,47 @@ Cirkit Designer supports basic simulation. For wiring verification:
 | Never exceed connector current rating | Overloaded connectors cause fires |
 | Use braided sleeving on moving cable chains | Extends wire life in drag chains |
 | Crimped connectors, not twisted + taped joins | Twisted joins corrode and fail |
+
+### 7.1 Bed Heating Circuit — SSR (Solid State Relay)
+
+All Fracktal machines use a **Solid State Relay (SSR)** to switch the bed heater, not a MOSFET on the control board. This is important to understand for both wiring and troubleshooting.
+
+**Why an SSR instead of a MOSFET?**
+- The bed heater draws **10–20A** — far more than a control board MOSFET can safely handle
+- An SSR switches the full bed current externally, protecting the board from high heat and current
+- The control board only sends a **low-current PWM signal** (3.3V/5V, <100mA) to the SSR input
+
+**How the circuit works:**
+
+```
+24V PSU ─────────────────────┬──────────────────┐
+                          │                  │
+                     SSR LOAD+ → Bed─ → SSR LOAD− → PSU GND
+
+Control Board
+  HB output (PWM)──────┬─ SSR INPUT+
+  GND               ─────┼─ SSR INPUT−
+                          └─ (SSR turns bed ON/OFF based on PWM)
+```
+
+**Wiring steps:**
+1. Connect the **SSR INPUT+** to the board’s `HB` (bed heater) output terminal.
+2. Connect the **SSR INPUT−** to the board’s GND.
+3. Connect **SSR LOAD+** to the 24V PSU positive rail.
+4. Connect **SSR LOAD−** to one wire of the bed heater.
+5. Connect the other bed heater wire to the PSU GND rail.
+6. Mount the SSR to a metal surface or heatsink — it generates heat during operation.
+
+> ⚠️ **Safety:** Never connect the bed heater directly to the control board’s HB output. The board’s output is only a **signal line** to trigger the SSR. Running full bed current through the board will burn it out.
+
+**Diagnosing SSR faults:**
+
+| Symptom | Likely Cause | Check |
+|---------|-------------|-------|
+| Bed does not heat, no error | SSR not triggering | Measure voltage across SSR INPUT pins — should pulse with PWM when bed is commanded on |
+| Bed does not heat, `MINTEMP` error | Thermistor open/disconnected | Check thermistor resistance (~100kΩ at room temp) |
+| Bed always on (no control) | SSR failed closed | Replace SSR; verify input signal is not stuck HIGH |
+| SSR overheating | Inadequate heatsinking | Mount SSR on metal chassis; add thermal paste |
 
 ---
 
