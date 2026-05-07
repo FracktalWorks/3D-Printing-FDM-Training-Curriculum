@@ -249,8 +249,8 @@ Our machines use different kinematic systems:
 
 ### 5.2 CoreXY
 
-![Cartesian FDM printer showing gantry and motion system — in CoreXY, both A and B motors share all X/Y movements via crossed belts, unlike independent-axis Cartesian designs](https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Prusa_i3_3D_Printer_-_Reprap_-_Completed.jpg/400px-Prusa_i3_3D_Printer_-_Reprap_-_Completed.jpg)
-*A Cartesian FDM printer — in CoreXY (used in Snowflake, Dragon, Twin Dragon) both motors drive X and Y simultaneously via crossed belts, reducing moving mass for higher print speeds. Source: [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Prusa_i3_3D_Printer_-_Reprap_-_Completed.jpg), CC BY 2.0*
+![FDM 3D printer showing gantry and motion system — in CoreXY, both A and B motors share all X/Y movements via crossed belts, unlike independent-axis Cartesian designs](https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/3D_printer2.jpg/400px-3D_printer2.jpg)
+*An FDM printer showing the gantry motion system — in CoreXY (used in Snowflake, Dragon, Twin Dragon) both motors drive X and Y simultaneously via crossed belts, reducing moving mass for higher print speeds. Source: [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:3D_printer2.jpg), CC BY-SA 3.0*
 
 - **Description:** Two motors at opposite sides of the gantry control X and Y simultaneously via crossed belts.
 - **Examples:** Snowflake, Dragon, Twin Dragon

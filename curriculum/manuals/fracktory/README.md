@@ -40,7 +40,7 @@ End G-code:
 END_PRINT
 ```
 
-> ⚠️ Note: Fracktory uses **Cura variable syntax** (`{material_bed_temperature}`) — NOT PrusaSlicer/OrcaSlicer syntax (`{first_layer_bed_temperature[0]}`). Do not mix these up when editing profiles.
+> ⚠️ Note: Fracktory uses **Cura variable syntax** (`{material_bed_temperature}`) — NOT OrcaSlicer/other slicer syntax (`{first_layer_bed_temperature[0]}`). Do not mix these up when editing profiles.
 
 ## Fracktory Version
 

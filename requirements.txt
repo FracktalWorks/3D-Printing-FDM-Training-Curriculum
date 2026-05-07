@@ -1,5 +1,0 @@
-# 3D Printing Training Agent — Dependencies
-
-python-dotenv
-google-api-python-client
-requests

@@ -19,3 +19,12 @@ Thumbs.db
 
 # VSCode
 .vscode/settings.json
+
+# Agent infrastructure (not part of the curriculum deliverable)
+directives/
+execution/
+AGENTS.md
+requirements.txt
+setup.ps1
+setup.sh
+.env.example

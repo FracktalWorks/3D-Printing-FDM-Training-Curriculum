@@ -2,8 +2,8 @@
 
 > What is 3D printing, the major technologies, industry applications, and how this curriculum is structured.
 
-![A Prusa i3 FDM 3D printer — one of the most widely-used open-source desktop printer designs](https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Prusa_i3_3D_Printer_-_Reprap_-_Completed.jpg/400px-Prusa_i3_3D_Printer_-_Reprap_-_Completed.jpg)
-*A Prusa i3 FDM printer — one of the most popular open-source 3D printer designs, showing the frame, gantry, control board, and build plate. Source: [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Prusa_i3_3D_Printer_-_Reprap_-_Completed.jpg), CC BY 2.0*
+![An FDM 3D printer showing the complete assembly — frame, gantry, hotend, and heated build plate](https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/3D_printer2.jpg/400px-3D_printer2.jpg)
+*An FDM desktop 3D printer showing the frame, gantry, control board, and build plate — the same core architecture as all Fracktal machines. Source: [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:3D_printer2.jpg), CC BY-SA 3.0*
 
 ## 🎯 Learning Objectives
 

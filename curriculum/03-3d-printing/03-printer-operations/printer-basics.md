@@ -2,8 +2,8 @@
 
 > A complete technical orientation to FDM 3D printing machines — how they work, what each component does, and machine-specific details for Snowflake, Dragon, and Twin Dragon.
 
-![FDM desktop 3D printer showing the complete assembly — frame, gantry, hotend, build plate, and control electronics — the same architecture as Fracktal Snowflake, Dragon, and Twin Dragon](https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Prusa_i3_3D_Printer_-_Reprap_-_Completed.jpg/400px-Prusa_i3_3D_Printer_-_Reprap_-_Completed.jpg)
-*A complete FDM printer showing frame, gantry, hotend, build plate, and control board — all Fracktal machines (Snowflake, Dragon, Twin Dragon) share this same fundamental architecture. Source: [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Prusa_i3_3D_Printer_-_Reprap_-_Completed.jpg), CC BY 2.0*
+![FDM desktop 3D printer showing the complete assembly — frame, gantry, hotend, build plate, and control electronics — the same architecture as Fracktal Snowflake, Dragon, and Twin Dragon](https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/3D_printer2.jpg/400px-3D_printer2.jpg)
+*A complete FDM printer showing frame, gantry, hotend, build plate, and control board — all Fracktal machines (Snowflake, Dragon, Twin Dragon) share this same fundamental architecture. Source: [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:3D_printer2.jpg), CC BY-SA 3.0*
 
 ## 🎯 Learning Objectives
 

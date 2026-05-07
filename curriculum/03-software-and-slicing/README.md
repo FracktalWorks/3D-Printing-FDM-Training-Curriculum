@@ -170,7 +170,7 @@ The first layer is the most critical. Key first-layer settings:
 
 - Configuration is done by editing `Configuration.h` and `Configuration_adv.h` and recompiling
 - Runs directly on the printer's MCU
-- Used by: Creality, Prusa (modified), Anycubic, and hundreds of other brands
+- Used by: Creality, Anycubic, and hundreds of other brands
 - Docs: [marlinfw.org](https://marlinfw.org)
 
 ### 4.2 Klipper
