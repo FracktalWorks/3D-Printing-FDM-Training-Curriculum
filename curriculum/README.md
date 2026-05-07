@@ -198,9 +198,4 @@ XX-section-name/
 
 The `README.md` is the **landing page** on GitHub — it shows learning objectives and links to the full content file. All actual lesson text lives in the `.md` content file.
 
-Images are stored in `images/` with subdirectories per section.
-See [images/README.md](images/README.md) for the complete image inventory and naming guide.
-
----
-
 *Maintained by Fracktal Works | support@fracktal.in*

@@ -1,9 +1,189 @@
-# 3D Printing Training — Fresher Onboarding Repository
+# 3D Printing Fresher Training Curriculum
 
-> Complete technical training for freshers joining a 3D printing (FDM) operations team.
-> Covers electronics, mechanical, software, printer skills, operations, and troubleshooting.
-> Machines: **Snowflake · Julia · Dragon · Twin Dragon**
-> Tools: **Cirkit Designer · OctoPrint · Klipper · Fracktory · MKS Boards**
+> **Fracktal Works** — Full-Stack 3D Printing Training for Freshers
+> Covers electronics fundamentals, mechanical basics, and all 3D-printing-specific skills from zero to confident operator.
+> Machines: **Snowflake**, **Julia**, **Dragon**, **Twin Dragon**
+> Tools: **Fracktory slicer**, **OctoPrint**, **Klipper**, **Cirkit Designer**
+
+---
+
+## Quick Start
+
+```
+1. Open curriculum/00-introduction/ and read introduction.md
+2. Work through modules in order — do not skip
+3. Complete hands-on exercises before marking a module done
+4. Test yourself with the knowledge check at the end of each module
+```
+
+---
+
+## Curriculum Structure
+
+```
+curriculum/
+├── 00-introduction/          ←  What is 3D printing? Technologies overview
+├── 01-electronics-basics/    ←  Electronics FUNDAMENTALS (PSU, boards, wiring)
+├── 02-mechanical-basics/     ←  Mechanical FUNDAMENTALS (frame, motion, hotend)
+├── 03-3d-printing/           ←  ALL 3D PRINTING topics (slicing → advanced)
+│   ├── 01-software-and-slicing/
+│   ├── 02-filaments-and-materials/
+│   ├── 03-printer-operations/
+│   ├── 04-troubleshooting/
+│   └── 05-advanced-topics/
+├── machines/                 ←  Quick-reference cards per printer
+├── manuals/                  ←  Step-by-step printer-specific manuals
+└── resources/                ←  Videos, links, G-code reference
+```
+
+---
+
+## Section Overview
+
+### Section 00 — Introduction
+
+| File | Content | Time |
+|------|---------|------|
+| [00-introduction/README.md](curriculum/00-introduction/README.md) | Module index | — |
+| [00-introduction/introduction.md](curriculum/00-introduction/introduction.md) | Technologies, workflow, applications, glossary | ~2h |
+
+---
+
+### Section 01 — Electronics Basics
+
+> General electronics knowledge needed to work with any FDM printer.
+
+| File | Content | Time |
+|------|---------|------|
+| [01-electronics-basics/README.md](curriculum/01-electronics-basics/README.md) | Module index | — |
+| [01-electronics-basics/electronics.md](curriculum/01-electronics-basics/electronics.md) | Multimeter, soldering, connectors, PSU, stepper motors, MKS Eagle & Manta M8P boards, CAN bus, Cirkit Designer | ~5h |
+
+**Key topics:** multimeter use · soldering & crimping · JST/Dupont/XT60 connectors · 24V PSU · stepper drivers (TMC2209, TMC5160) · MKS Eagle V1.0 (Snowflake) · Manta M8P V2.0 (Dragon, Twin Dragon) · CAN bus architecture
+
+---
+
+### Section 02 — Mechanical Basics
+
+> General mechanics knowledge needed to assemble and maintain any FDM printer.
+
+| File | Content | Time |
+|------|---------|------|
+| [02-mechanical-basics/README.md](curriculum/02-mechanical-basics/README.md) | Module index | — |
+| [02-mechanical-basics/mechanical.md](curriculum/02-mechanical-basics/mechanical.md) | Tools, fasteners, frame, linear motion, hotend, extruder, maintenance | ~4h |
+
+**Key topics:** hex keys · calipers · M3/M4/M5 fasteners · aluminium extrusion · MGN linear rails · lead screws · GT2 belts · CoreXY kinematics · hotend anatomy · Bowden vs direct drive
+
+---
+
+### Section 03 — 3D Printing
+
+> All 3D-printing-specific skills, organized by topic.
+
+| Module | File | Content | Time |
+|--------|------|---------|------|
+| Software & Slicing | [03-3d-printing/01-software-and-slicing/](curriculum/03-3d-printing/01-software-and-slicing/README.md) | Fracktory slicer, parameters, firmware, G-code, modeling tools | ~4h |
+| Filaments & Materials | [03-3d-printing/02-filaments-and-materials/](curriculum/03-3d-printing/02-filaments-and-materials/README.md) | PLA, PETG, ABS, TPU, Nylon, eSUN specs, storage | ~3h |
+| Printer Operations | [03-3d-printing/03-printer-operations/](curriculum/03-3d-printing/03-printer-operations/README.md) | Assembly, bed leveling, E-steps, flow, PID, OctoPrint, Wi-Fi printing | ~5h+5h |
+| Troubleshooting | [03-3d-printing/04-troubleshooting/](curriculum/03-3d-printing/04-troubleshooting/README.md) | Diagnostics, 10 common failures, machine-specific fixes | ~4h |
+| Advanced Topics | [03-3d-printing/05-advanced-topics/](curriculum/03-3d-printing/05-advanced-topics/README.md) | Klipper advanced, input shaping, pressure advance, DfAM | ~6h |
+
+**Total Section 03: ~27 hours**
+
+---
+
+## Machine Quick-Reference Cards
+
+> Keep these open whenever working on a specific printer.
+
+| Machine | Motion | Build Volume | Firmware | Board | Quick Ref |
+|---------|--------|-------------|---------|-------|-----------|
+| **Snowflake** | CoreXY | 200×200×200 mm | Marlin | MKS Eagle V1.0 | [SNOWFLAKE-QUICK-REF.md](curriculum/machines/SNOWFLAKE-QUICK-REF.md) |
+| **Julia** | CoreXY | 250×250×250 mm | Marlin | MKS Robin Nano V3 | [JULIA-QUICK-REF.md](curriculum/machines/JULIA-QUICK-REF.md) |
+| **Dragon** | CoreXY | 400×300×400 mm | Klipper | Manta M8P V2.0 | [DRAGON-QUICK-REF.md](curriculum/machines/DRAGON-QUICK-REF.md) |
+| **Twin Dragon** | CoreXY + IDEX | 300×300×350 mm | Klipper | Manta M8P V2.0 | [TWIN-DRAGON-QUICK-REF.md](curriculum/machines/TWIN-DRAGON-QUICK-REF.md) |
+
+---
+
+## Printer Manuals
+
+> Step-by-step operational guides per machine.
+
+| Machine | Manual |
+|---------|--------|
+| Snowflake | [manuals/snowflake/](curriculum/manuals/snowflake/README.md) |
+| Julia | [manuals/julia/](curriculum/manuals/julia/README.md) |
+| Dragon | [manuals/dragon/](curriculum/manuals/dragon/README.md) |
+| Twin Dragon | [manuals/twin-dragon/](curriculum/manuals/twin-dragon/README.md) |
+| Fracktory Slicer | [manuals/fracktory/](curriculum/manuals/fracktory/README.md) |
+
+---
+
+## Resource Library
+
+| Resource | What's Inside |
+|----------|--------------|
+| [resources/videos.md](curriculum/resources/videos.md) | Curated YouTube videos organized by module and topic |
+| [resources/links.md](curriculum/resources/links.md) | Datasheets, documentation, wikis, and written guides |
+| [resources/GCODE-REFERENCE.md](curriculum/resources/GCODE-REFERENCE.md) | Quick reference for all Klipper and Marlin G-code / M-code commands |
+
+---
+
+## Skill Pillar Map
+
+```
+┌───────────────────────────────────────────────────────────────────┐
+│                    LEARNING PATH                                 │
+│                                                                  │
+│  00-introduction   ←  Start here. No prior knowledge needed.    │
+│         ↓                                                        │
+│  01-electronics    ←  How the printer’s electronics work         │
+│         ↓                                                        │
+│  02-mechanical     ←  How the printer moves                      │
+│         ↓                                                        │
+│  03-3d-printing    ←  Everything 3D-printing-specific            │
+│    ├── software-and-slicing   (prepare your files)               │
+│    ├── filaments-and-materials (choose your material)            │
+│    ├── printer-operations     (run and calibrate)                │
+│    ├── troubleshooting        (diagnose and fix)                 │
+│    └── advanced-topics        (Klipper, DfAM, multi-material)   │
+└───────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## Learning Paths by Role
+
+| Role | Recommended Modules | Skip |
+|------|---------------------|------|
+| **Operator (print jobs only)** | Intro → Filaments → Operations → Troubleshooting | Electronics, Mechanical, Advanced |
+| **Technician (maintenance + repair)** | All modules | Nothing |
+| **Firmware Engineer** | Electronics → Software → Advanced | Filaments |
+| **New Fresher (all-round)** | Complete in order (00 → 03-advanced) | Nothing |
+
+---
+
+## Estimated Total Time
+
+| Section | Time |
+|---------|------|
+| 00 — Introduction | ~2h |
+| 01 — Electronics Basics | ~5h |
+| 02 — Mechanical Basics | ~4h |
+| 03 — 3D Printing (all 5 modules) | ~27h |
+| **Total** | **~38 hours** |
+
+---
+
+## Safety Reference
+
+> Read before operating any machine.
+
+- [00-introduction/SAFETY-QUICK-REFERENCE.md](curriculum/00-introduction/SAFETY-QUICK-REFERENCE.md) — Electrical, thermal, mechanical, fire, and chemical safety rules + emergency procedures
+
+---
+
+*Maintained by Fracktal Works | support@fracktal.in*
+
 
 ---
 
